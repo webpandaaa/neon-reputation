@@ -1,4 +1,10 @@
-import { User } from "lucide-react";
+import { User, ChevronDown, LogOut, Settings } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const DashboardHeader = () => {
   return (
@@ -21,9 +27,26 @@ export const DashboardHeader = () => {
             <span className="text-sm font-medium text-foreground">Admin User</span>
             <span className="text-xs text-muted-foreground">admin@reputation.io</span>
           </div>
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all hover:ring-4 hover:ring-primary/50 cursor-pointer">
-            <User className="w-5 h-5 text-primary-foreground" />
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 focus:outline-none group">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all group-hover:ring-4 group-hover:ring-primary/50 cursor-pointer">
+                  <User className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <ChevronDown className="w-4 h-4 text-muted-foreground transition-transform group-hover:text-foreground" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-xl border-border/50">
+              <DropdownMenuItem className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50">
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50 text-destructive focus:text-destructive">
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>
