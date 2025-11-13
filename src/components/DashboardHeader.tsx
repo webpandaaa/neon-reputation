@@ -40,13 +40,20 @@ export const DashboardHeader = () => {
             <p className="text-xs text-muted-foreground">Analytics & Insights</p>
           </div>
         </div>
-        
+
         <div className="flex items-center gap-4">
+          
           <div className="hidden md:flex flex-col items-end">
             <span className="text-sm font-medium text-foreground">Admin User</span>
             <span className="text-xs text-muted-foreground">admin@reputation.io</span>
           </div>
-          
+
+          <button className="flex items-center gap-2 focus:outline-none group">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all group-hover:ring-4 group-hover:ring-primary/50 cursor-pointer">
+              <User className="w-5 h-5 text-primary-foreground" />
+            </div>
+          </button>
+
           <Button
             variant="ghost"
             size="icon"
@@ -56,30 +63,9 @@ export const DashboardHeader = () => {
             <Menu className="w-5 h-5" />
           </Button>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 focus:outline-none group">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all group-hover:ring-4 group-hover:ring-primary/50 cursor-pointer">
-                  <User className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <ChevronDown className="w-4 h-4 text-muted-foreground transition-transform group-hover:text-foreground" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-xl border-border/50">
-              <DropdownMenuItem 
-                className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50"
-                onClick={() => navigate("/settings")}
-              >
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-accent/50 focus:bg-accent/50 text-destructive focus:text-destructive">
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
+
+        
       </div>
 
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -87,7 +73,7 @@ export const DashboardHeader = () => {
           <SheetHeader>
             <SheetTitle className="text-foreground">Navigation</SheetTitle>
           </SheetHeader>
-          
+
           <div className="flex flex-col gap-2 mt-6">
             <Button
               variant="ghost"
@@ -116,8 +102,8 @@ export const DashboardHeader = () => {
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <img 
-                      src={competitor.logo} 
+                    <img
+                      src={competitor.logo}
                       alt={competitor.name}
                       className="w-6 h-6 object-contain"
                       onError={(e) => {
