@@ -26,8 +26,9 @@ export const MetricCard = ({ title, value, change, icon: Icon, trend, color = "p
 
   return (
     <div className={`
-      glass rounded-2xl p-6 border transition-all duration-300
-      hover:scale-105 hover:shadow-2xl cursor-pointer group
+      glass rounded-2xl p-6 border transition-all duration-500
+      hover:scale-[1.02] hover:shadow-2xl cursor-pointer group
+      hover:border-primary/50 animate-fade-in
       bg-gradient-to-br ${colorClasses[color]}
     `}>
       <div className="flex items-start justify-between mb-4">

@@ -3,6 +3,7 @@ import { DashboardHeader } from "@/components/DashboardHeader";
 import { Card } from "@/components/ui/card";
 import { TrendChart } from "@/components/TrendChart";
 import { SentimentPieChart } from "@/components/SentimentPieChart";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ThumbsUp, ThumbsDown, AlertTriangle, Lightbulb } from "lucide-react";
 
 const competitorData: Record<string, any> = {
@@ -106,7 +107,8 @@ export default function CompetitorAnalysis() {
     return (
       <>
         <DashboardHeader />
-        <div className="min-h-screen bg-background p-6">
+        <div className="min-h-screen bg-background p-6 relative">
+          <AnimatedBackground />
           <div className="container mx-auto">
             <h1 className="text-2xl font-bold text-foreground">Competitor not found</h1>
           </div>
@@ -118,11 +120,12 @@ export default function CompetitorAnalysis() {
   return (
     <>
       <DashboardHeader />
-      <div className="min-h-screen bg-background p-6">
+      <div className="min-h-screen bg-background p-6 relative">
+        <AnimatedBackground />
         <div className="container mx-auto space-y-6">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
-            <img 
+          <div className="flex items-center gap-4 mb-8 animate-fade-in">
+            <img
               src={data.logo} 
               alt={data.name}
               className="w-16 h-16 object-contain"
@@ -139,15 +142,15 @@ export default function CompetitorAnalysis() {
           </div>
 
           {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-in">
             <TrendChart data={data.trendData} />
             <SentimentPieChart data={data.sentimentData} />
           </div>
 
           {/* Top Posts Analysis */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
             {/* Positive Posts */}
-            <Card className="glass border-border/50 p-6">
+            <Card className="glass border-border/50 p-6 hover:border-green-500/30 transition-all duration-500 hover:shadow-xl">
               <div className="flex items-center gap-3 mb-4">
                 <ThumbsUp className="w-6 h-6 text-green-500" />
                 <h2 className="text-xl font-bold text-foreground">Top 5 Positive Reviews</h2>
@@ -156,7 +159,7 @@ export default function CompetitorAnalysis() {
                 {data.topPositive.map((post: string, index: number) => (
                   <div 
                     key={index}
-                    className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-colors"
+                    className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                   >
                     <p className="text-sm text-foreground">{post}</p>
                   </div>
@@ -165,7 +168,7 @@ export default function CompetitorAnalysis() {
             </Card>
 
             {/* Negative Posts */}
-            <Card className="glass border-border/50 p-6">
+            <Card className="glass border-border/50 p-6 hover:border-red-500/30 transition-all duration-500 hover:shadow-xl">
               <div className="flex items-center gap-3 mb-4">
                 <ThumbsDown className="w-6 h-6 text-red-500" />
                 <h2 className="text-xl font-bold text-foreground">Top 5 Negative Reviews</h2>
@@ -174,7 +177,7 @@ export default function CompetitorAnalysis() {
                 {data.topNegative.map((post: string, index: number) => (
                   <div 
                     key={index}
-                    className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 transition-colors"
+                    className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
                   >
                     <p className="text-sm text-foreground">{post}</p>
                   </div>
@@ -184,9 +187,9 @@ export default function CompetitorAnalysis() {
           </div>
 
           {/* Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-scale-in">
             {/* What to Avoid */}
-            <Card className="glass border-border/50 p-6">
+            <Card className="glass border-border/50 p-6 hover:border-yellow-500/30 transition-all duration-500 hover:shadow-xl">
               <div className="flex items-center gap-3 mb-4">
                 <AlertTriangle className="w-6 h-6 text-yellow-500" />
                 <h2 className="text-xl font-bold text-foreground">What to Avoid</h2>
@@ -212,7 +215,7 @@ export default function CompetitorAnalysis() {
             </Card>
 
             {/* What to Follow */}
-            <Card className="glass border-border/50 p-6">
+            <Card className="glass border-border/50 p-6 hover:border-blue-500/30 transition-all duration-500 hover:shadow-xl">
               <div className="flex items-center gap-3 mb-4">
                 <Lightbulb className="w-6 h-6 text-blue-500" />
                 <h2 className="text-xl font-bold text-foreground">Best Practices to Follow</h2>

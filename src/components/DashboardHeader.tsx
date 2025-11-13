@@ -27,10 +27,10 @@ export const DashboardHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="glass border-b border-border/50 backdrop-blur-xl sticky top-0 z-50">
+    <header className="glass border-b border-border/50 backdrop-blur-xl sticky top-0 z-50 animate-slide-in">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-primary">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-primary hover:scale-110 transition-transform duration-300">
             <span className="text-xl font-bold text-primary-foreground">R</span>
           </div>
           <div>
@@ -49,7 +49,7 @@ export const DashboardHeader = () => {
           </div>
 
           <button className="flex items-center gap-2 focus:outline-none group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all group-hover:ring-4 group-hover:ring-primary/50 cursor-pointer">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center ring-2 ring-primary/30 transition-all duration-300 group-hover:ring-4 group-hover:ring-primary/50 group-hover:scale-110 cursor-pointer">
               <User className="w-5 h-5 text-primary-foreground" />
             </div>
           </button>
@@ -58,7 +58,7 @@ export const DashboardHeader = () => {
             variant="ghost"
             size="icon"
             onClick={() => setIsMenuOpen(true)}
-            className="hover:bg-accent/50"
+            className="hover:bg-accent/50 hover:scale-110 transition-all duration-300"
           >
             <Menu className="w-5 h-5" />
           </Button>

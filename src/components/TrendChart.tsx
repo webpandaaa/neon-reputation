@@ -11,7 +11,7 @@ interface TrendChartProps {
 
 export const TrendChart = ({ data }: TrendChartProps) => {
   return (
-    <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-300">
+    <div className="glass rounded-2xl p-6 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl animate-slide-in">
       <div className="mb-6">
         <h2 className="text-xl font-bold text-foreground mb-2">Sentiment Trends Over Time</h2>
         <p className="text-sm text-muted-foreground">Year-wise reputation analysis</p>

@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
       {/* Header */}
       <header className="glass border-b border-border/50 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center gap-4">
@@ -75,8 +77,8 @@ const Settings = () => {
           </TabsList>
 
           {/* General Settings */}
-          <TabsContent value="general" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="general" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Profile Management</CardTitle>
                 <CardDescription>Update your personal information</CardDescription>
@@ -114,7 +116,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-accent/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Theme & Appearance</CardTitle>
                 <CardDescription>Customize your dashboard look</CardDescription>
@@ -148,7 +150,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Notifications</CardTitle>
                 <CardDescription>Configure how you receive alerts</CardDescription>
@@ -200,8 +202,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Account & Security */}
-          <TabsContent value="security" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="security" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Two-Factor Authentication</CardTitle>
                 <CardDescription>Add an extra layer of security</CardDescription>
@@ -224,7 +226,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-accent/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Connected Accounts</CardTitle>
                 <CardDescription>Manage third-party integrations</CardDescription>
@@ -245,7 +247,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Active Sessions</CardTitle>
                 <CardDescription>Manage your logged-in devices</CardDescription>
@@ -265,8 +267,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Data & Privacy */}
-          <TabsContent value="privacy" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="privacy" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Data Management</CardTitle>
                 <CardDescription>Control your stored data</CardDescription>
@@ -305,8 +307,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Integrations */}
-          <TabsContent value="integrations" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="integrations" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Hugging Face API</CardTitle>
                 <CardDescription>Connect your AI integration</CardDescription>
@@ -323,7 +325,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-accent/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Review Platforms</CardTitle>
                 <CardDescription>Connect to external review sources</CardDescription>
@@ -346,8 +348,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Dashboard Preferences */}
-          <TabsContent value="dashboard" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="dashboard" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Dashboard Preferences</CardTitle>
                 <CardDescription>Customize your analytics view</CardDescription>
@@ -396,7 +398,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Advanced Options</CardTitle>
                 <CardDescription>Developer and power user settings</CardDescription>

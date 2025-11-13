@@ -15,7 +15,7 @@ const COLORS = {
 
 export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
   return (
-    <div className="glass rounded-2xl p-6 border border-border/50 hover:border-secondary/30 transition-all duration-300">
+    <div className="glass rounded-2xl p-6 border border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl animate-scale-in">
       <div className="mb-6">
         <h2 className="text-xl font-bold text-foreground mb-2">Sentiment Distribution</h2>
         <p className="text-sm text-muted-foreground">Overall review breakdown</p>
