@@ -20,7 +20,7 @@ export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
         <h2 className="text-xl font-bold text-foreground mb-2">Sentiment Distribution</h2>
         <p className="text-sm text-muted-foreground">Overall review breakdown</p>
       </div>
-      
+
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -34,23 +34,25 @@ export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
             dataKey="value"
           >
             {data.map((entry, index) => (
-              <Cell 
-                key={`cell-${index}`} 
+              <Cell
+                key={`cell-${index}`}
                 fill={COLORS[entry.name as keyof typeof COLORS]}
                 stroke="hsl(var(--background))"
                 strokeWidth={2}
               />
             ))}
           </Pie>
-          <Tooltip 
+          <Tooltip
             contentStyle={{
               backgroundColor: 'hsl(var(--card))',
               border: '1px solid hsl(var(--border))',
               borderRadius: '12px',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
             }}
+            itemStyle={{ color: 'white' }}
+            labelStyle={{ color: 'white' }}
           />
-          <Legend 
+          <Legend
             iconType="circle"
             wrapperStyle={{
               paddingTop: '20px',
