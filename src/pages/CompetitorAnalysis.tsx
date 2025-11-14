@@ -4,7 +4,8 @@ import { Card } from "@/components/ui/card";
 import { TrendChart } from "@/components/TrendChart";
 import { SentimentPieChart } from "@/components/SentimentPieChart";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { ThumbsUp, ThumbsDown, AlertTriangle, Lightbulb } from "lucide-react";
+import { ReviewCarousel } from "@/components/ReviewCarousel";
+import { AlertTriangle, Lightbulb } from "lucide-react";
 
 const competitorData: Record<string, any> = {
   "allianz": {
@@ -23,18 +24,18 @@ const competitorData: Record<string, any> = {
       { name: "Neutral", value: 6 },
     ],
     topPositive: [
-      "Excellent customer service and quick claim processing",
-      "Wide range of insurance products with competitive pricing",
-      "Strong digital platform with easy-to-use mobile app",
-      "Transparent communication and regular policy updates",
-      "Reliable 24/7 customer support across multiple channels",
+      { text: "Excellent customer service and quick claim processing", views: 12500, likes: 890, comments: 234 },
+      { text: "Wide range of insurance products with competitive pricing", views: 11200, likes: 756, comments: 189 },
+      { text: "Strong digital platform with easy-to-use mobile app", views: 10800, likes: 823, comments: 201 },
+      { text: "Transparent communication and regular policy updates", views: 9500, likes: 612, comments: 156 },
+      { text: "Reliable 24/7 customer support across multiple channels", views: 8900, likes: 701, comments: 178 },
     ],
     topNegative: [
-      "Premium increases without clear justification",
-      "Complex policy terms difficult to understand",
-      "Long waiting times during peak hours",
-      "Limited flexibility in policy customization",
-      "Occasional delays in claim settlements",
+      { text: "Premium increases without clear justification", views: 8200, likes: 423, comments: 312 },
+      { text: "Complex policy terms difficult to understand", views: 7800, likes: 389, comments: 267 },
+      { text: "Long waiting times during peak hours", views: 7100, likes: 356, comments: 198 },
+      { text: "Limited flexibility in policy customization", views: 6500, likes: 298, comments: 145 },
+      { text: "Occasional delays in claim settlements", views: 6200, likes: 267, comments: 134 },
     ],
   },
   "generali": {
@@ -53,18 +54,18 @@ const competitorData: Record<string, any> = {
       { name: "Neutral", value: 6 },
     ],
     topPositive: [
-      "Comprehensive coverage options for diverse needs",
-      "Strong international presence and stability",
-      "Innovative wellness programs and health initiatives",
-      "Efficient digital claim submission process",
-      "Personalized service through dedicated advisors",
+      { text: "Comprehensive coverage options for diverse needs", views: 11800, likes: 845, comments: 219 },
+      { text: "Strong international presence and stability", views: 10900, likes: 723, comments: 187 },
+      { text: "Innovative wellness programs and health initiatives", views: 10200, likes: 789, comments: 205 },
+      { text: "Efficient digital claim submission process", views: 9300, likes: 634, comments: 167 },
+      { text: "Personalized service through dedicated advisors", views: 8700, likes: 678, comments: 172 },
     ],
     topNegative: [
-      "Higher premium rates compared to competitors",
-      "Slower response times for complex inquiries",
-      "Limited online resources for policy management",
-      "Inconsistent service quality across regions",
-      "Rigid policy modification procedures",
+      { text: "Higher premium rates compared to competitors", views: 7900, likes: 412, comments: 298 },
+      { text: "Slower response times for complex inquiries", views: 7400, likes: 378, comments: 256 },
+      { text: "Limited online resources for policy management", views: 6900, likes: 342, comments: 189 },
+      { text: "Inconsistent service quality across regions", views: 6300, likes: 289, comments: 156 },
+      { text: "Rigid policy modification procedures", views: 5900, likes: 256, comments: 128 },
     ],
   },
   "signal-iduna": {
@@ -83,18 +84,18 @@ const competitorData: Record<string, any> = {
       { name: "Neutral", value: 6 },
     ],
     topPositive: [
-      "Affordable pricing with flexible payment options",
-      "Strong focus on customer education and transparency",
-      "Quick and hassle-free claim approval process",
-      "Excellent reputation in the local market",
-      "Proactive risk management and prevention services",
+      { text: "Affordable pricing with flexible payment options", views: 10500, likes: 798, comments: 203 },
+      { text: "Strong focus on customer education and transparency", views: 9800, likes: 712, comments: 178 },
+      { text: "Quick and hassle-free claim approval process", views: 9200, likes: 667, comments: 192 },
+      { text: "Excellent reputation in the local market", views: 8600, likes: 589, comments: 154 },
+      { text: "Proactive risk management and prevention services", views: 8100, likes: 623, comments: 167 },
     ],
     topNegative: [
-      "Limited digital features compared to larger competitors",
-      "Smaller network of service partners",
-      "Outdated website interface and user experience",
-      "Less comprehensive coverage for specialized needs",
-      "Limited availability of multilingual support",
+      { text: "Limited digital features compared to larger competitors", views: 7600, likes: 398, comments: 287 },
+      { text: "Smaller network of service partners", views: 7100, likes: 365, comments: 245 },
+      { text: "Outdated website interface and user experience", views: 6700, likes: 334, comments: 198 },
+      { text: "Less comprehensive coverage for specialized needs", views: 6100, likes: 278, comments: 167 },
+      { text: "Limited availability of multilingual support", views: 5700, likes: 245, comments: 142 },
     ],
   },
 };
@@ -149,41 +150,8 @@ export default function CompetitorAnalysis() {
 
           {/* Top Posts Analysis */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
-            {/* Positive Posts */}
-            <Card className="glass border-border/50 p-6 hover:border-green-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <ThumbsUp className="w-6 h-6 text-green-500" />
-                <h2 className="text-xl font-bold text-foreground">Top 5 Positive Reviews</h2>
-              </div>
-              <div className="space-y-3">
-                {data.topPositive.map((post: string, index: number) => (
-                  <div 
-                    key={index}
-                    className="p-3 rounded-lg bg-green-500/10 border border-green-500/20 hover:bg-green-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-                  >
-                    <p className="text-sm text-foreground">{post}</p>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Negative Posts */}
-            <Card className="glass border-border/50 p-6 hover:border-red-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <ThumbsDown className="w-6 h-6 text-red-500" />
-                <h2 className="text-xl font-bold text-foreground">Top 5 Negative Reviews</h2>
-              </div>
-              <div className="space-y-3">
-                {data.topNegative.map((post: string, index: number) => (
-                  <div 
-                    key={index}
-                    className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-                  >
-                    <p className="text-sm text-foreground">{post}</p>
-                  </div>
-                ))}
-              </div>
-            </Card>
+            <ReviewCarousel reviews={data.topPositive} type="positive" />
+            <ReviewCarousel reviews={data.topNegative} type="negative" />
           </div>
 
           {/* Insights */}
