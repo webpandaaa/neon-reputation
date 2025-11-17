@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Eye, Heart, MessageCircle } from "lucide-react";
+import { Eye, Heart, MessageCircle, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 interface Post {
   id: number;
@@ -94,6 +95,17 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
             aria-label={`Go to post ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* Show More Link */}
+      <div className="flex justify-end mt-4">
+        <Link 
+          to="/posts" 
+          className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group"
+        >
+          Show More
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </div>
     </Card>
   );
