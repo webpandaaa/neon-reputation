@@ -65,6 +65,53 @@ All colors MUST be HSL.
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-glow: box-shadow 0.3s ease, transform 0.3s ease;
   }
+
+  .light {
+    /* Light theme with clean, professional colors */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --card-glass: 0 0% 100% / 0.8;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* Primary color stays dynamic */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 271 81% 56%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-glow: 271 81% 56% / 0.3;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 98%;
+    --accent-glow: 217 91% 60% / 0.3;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --neutral: 45 5% 50%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 95%;
+    --ring: 186 100% 50%;
+
+    /* Glassmorphism */
+    --glass-bg: hsla(0, 0%, 100%, 0.7);
+    --glass-border: hsla(0, 0%, 0%, 0.1);
+    
+    /* Shadows and glows */
+    --shadow-glow-primary: 0 0 20px hsl(var(--primary-glow)), 0 0 40px hsl(var(--primary-glow));
+    --shadow-glow-secondary: 0 0 20px hsl(var(--secondary-glow)), 0 0 40px hsl(var(--secondary-glow));
+    --shadow-card: 0 4px 16px hsla(0, 0%, 0%, 0.1);
+  }
 }
 
 @layer base {
