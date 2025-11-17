@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, User, Lock, Shield, Database, Plug, Settings as SettingsIcon, Upload, Download, Trash2, RefreshCw } from "lucide-react";
+import { ArrowLeft, User, Lock, Shield, Database, Plug, Settings as SettingsIcon, Upload, Download, Trash2, RefreshCw, Palette } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +10,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Settings = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [darkMode, setDarkMode] = useState(true);
+  const { mode, accentColor, setMode, setAccentColor, toggleMode } = useTheme();
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(false);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
@@ -27,7 +29,8 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      <AnimatedBackground />
       {/* Header */}
       <header className="glass border-b border-border/50 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center gap-4">
@@ -52,6 +55,10 @@ const Settings = () => {
       <div className="container mx-auto px-6 py-8">
         <Tabs defaultValue="general" className="w-full">
           <TabsList className="glass mb-8 p-1">
+            <TabsTrigger value="appearance" className="gap-2">
+              <Palette className="w-4 h-4" />
+              Appearance
+            </TabsTrigger>
             <TabsTrigger value="general" className="gap-2">
               <User className="w-4 h-4" />
               General
@@ -74,9 +81,111 @@ const Settings = () => {
             </TabsTrigger>
           </TabsList>
 
+          {/* Theme & Appearance */}
+          <TabsContent value="appearance" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
+              <CardHeader>
+                <CardTitle>Theme Mode</CardTitle>
+                <CardDescription>Choose between light and dark theme</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label htmlFor="theme-mode" className="text-base">Dark Mode</Label>
+                    <p className="text-sm text-muted-foreground">
+                      {mode === "dark" ? "Currently using dark theme" : "Currently using light theme"}
+                    </p>
+                  </div>
+                  <Switch
+                    id="theme-mode"
+                    checked={mode === "dark"}
+                    onCheckedChange={(checked) => setMode(checked ? "dark" : "light")}
+                  />
+                </div>
+                <Separator />
+                <div className="flex gap-4">
+                  <Button
+                    variant={mode === "light" ? "default" : "outline"}
+                    onClick={() => setMode("light")}
+                    className="flex-1"
+                  >
+                    ☀️ Light
+                  </Button>
+                  <Button
+                    variant={mode === "dark" ? "default" : "outline"}
+                    onClick={() => setMode("dark")}
+                    className="flex-1"
+                  >
+                    🌙 Dark
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
+              <CardHeader>
+                <CardTitle>Accent Color</CardTitle>
+                <CardDescription>Customize your primary accent color</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="accent-color">Choose Accent Color</Label>
+                  <div className="flex gap-4 items-center">
+                    <input
+                      id="accent-color"
+                      type="color"
+                      value={accentColor}
+                      onChange={(e) => setAccentColor(e.target.value)}
+                      className="w-20 h-20 rounded-lg cursor-pointer border-2 border-border"
+                    />
+                    <div className="flex-1 space-y-2">
+                      <Input
+                        type="text"
+                        value={accentColor}
+                        onChange={(e) => setAccentColor(e.target.value)}
+                        placeholder="#00D9FF"
+                        className="font-mono"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Current color: {accentColor}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <Separator />
+                <div className="space-y-2">
+                  <Label>Quick Presets</Label>
+                  <div className="grid grid-cols-6 gap-2">
+                    {["#00D9FF", "#A855F7", "#3B82F6", "#10B981", "#F59E0B", "#EF4444"].map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => setAccentColor(color)}
+                        className="w-full h-12 rounded-lg border-2 hover:scale-110 transition-transform"
+                        style={{ 
+                          backgroundColor: color,
+                          borderColor: accentColor === color ? "white" : "transparent"
+                        }}
+                        title={color}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <Separator />
+                <div className="p-4 rounded-lg bg-card border border-border space-y-2">
+                  <p className="text-sm font-medium">Live Preview</p>
+                  <div className="flex gap-2 flex-wrap">
+                    <Button size="sm">Primary Button</Button>
+                    <Button size="sm" variant="outline">Outline Button</Button>
+                    <Button size="sm" variant="secondary">Secondary</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           {/* General Settings */}
-          <TabsContent value="general" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="general" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Profile Management</CardTitle>
                 <CardDescription>Update your personal information</CardDescription>
@@ -114,41 +223,9 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
-              <CardHeader>
-                <CardTitle>Theme & Appearance</CardTitle>
-                <CardDescription>Customize your dashboard look</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <Label htmlFor="dark-mode">Dark Mode</Label>
-                    <p className="text-sm text-muted-foreground">Enable dark theme</p>
-                  </div>
-                  <Switch
-                    id="dark-mode"
-                    checked={darkMode}
-                    onCheckedChange={setDarkMode}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="accent-color">Accent Color</Label>
-                  <Select defaultValue="teal">
-                    <SelectTrigger id="accent-color">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="teal">Teal</SelectItem>
-                      <SelectItem value="purple">Purple</SelectItem>
-                      <SelectItem value="blue">Electric Blue</SelectItem>
-                      <SelectItem value="pink">Pink</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
 
-            <Card className="glass border-border/50">
+
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Notifications</CardTitle>
                 <CardDescription>Configure how you receive alerts</CardDescription>
@@ -200,8 +277,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Account & Security */}
-          <TabsContent value="security" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="security" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Two-Factor Authentication</CardTitle>
                 <CardDescription>Add an extra layer of security</CardDescription>
@@ -224,7 +301,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-accent/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Connected Accounts</CardTitle>
                 <CardDescription>Manage third-party integrations</CardDescription>
@@ -245,7 +322,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Active Sessions</CardTitle>
                 <CardDescription>Manage your logged-in devices</CardDescription>
@@ -265,8 +342,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Data & Privacy */}
-          <TabsContent value="privacy" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="privacy" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Data Management</CardTitle>
                 <CardDescription>Control your stored data</CardDescription>
@@ -305,8 +382,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Integrations */}
-          <TabsContent value="integrations" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="integrations" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Hugging Face API</CardTitle>
                 <CardDescription>Connect your AI integration</CardDescription>
@@ -323,7 +400,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-accent/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Review Platforms</CardTitle>
                 <CardDescription>Connect to external review sources</CardDescription>
@@ -346,8 +423,8 @@ const Settings = () => {
           </TabsContent>
 
           {/* Dashboard Preferences */}
-          <TabsContent value="dashboard" className="space-y-6">
-            <Card className="glass border-border/50">
+          <TabsContent value="dashboard" className="space-y-6 animate-fade-in">
+            <Card className="glass border-border/50 hover:border-primary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Dashboard Preferences</CardTitle>
                 <CardDescription>Customize your analytics view</CardDescription>
@@ -396,7 +473,7 @@ const Settings = () => {
               </CardContent>
             </Card>
 
-            <Card className="glass border-border/50">
+            <Card className="glass border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl">
               <CardHeader>
                 <CardTitle>Advanced Options</CardTitle>
                 <CardDescription>Developer and power user settings</CardDescription>

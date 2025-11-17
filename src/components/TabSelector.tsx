@@ -7,11 +7,12 @@ interface TabSelectorProps {
 
 export const TabSelector = ({ activeTab, onTabChange }: TabSelectorProps) => {
   return (
-    <div className="glass rounded-2xl p-2 inline-flex gap-2">
+    <div className="glass rounded-2xl p-2 inline-flex gap-2 animate-fade-in">
       <button
         onClick={() => onTabChange("employer")}
         className={`
-          flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300
+          flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-500
+          hover:scale-105 active:scale-95
           ${
             activeTab === "employer"
               ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg glow-primary"
@@ -26,7 +27,8 @@ export const TabSelector = ({ activeTab, onTabChange }: TabSelectorProps) => {
       <button
         onClick={() => onTabChange("insurance")}
         className={`
-          flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300
+          flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-500
+          hover:scale-105 active:scale-95
           ${
             activeTab === "insurance"
               ? "bg-gradient-to-r from-secondary to-accent text-secondary-foreground shadow-lg glow-secondary"
