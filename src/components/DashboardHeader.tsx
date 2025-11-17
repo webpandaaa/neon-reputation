@@ -1,6 +1,7 @@
-import { User, ChevronDown, LogOut, Settings, Menu, LayoutDashboard, Users } from "lucide-react";
+import { User, LogOut, Settings, Menu, LayoutDashboard, } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,9 +18,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const competitors = [
-  { name: "Allianz", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Allianz_logo.svg/200px-Allianz_logo.svg.png" },
-  { name: "Generali", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Generali_logo.svg/200px-Generali_logo.svg.png" },
-  { name: "Signal Iduna", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Signal_Iduna_logo.svg/200px-Signal_Iduna_logo.svg.png" },
+  { name: "Allianz", logo: "https://companieslogo.com/img/orig/ALV.DE.D-ce2f8648.png?t=1720244490" },
+  { name: "Generali", logo: "https://companieslogo.com/img/orig/G.MI.D-21c612f2.png?t=1720244491" },
+  { name: "Signal Iduna", logo: "../images/logo.png" },
 ];
 
 export const DashboardHeader = () => {
@@ -65,7 +66,7 @@ export const DashboardHeader = () => {
 
         </div>
 
-        
+
       </div>
 
       <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -105,7 +106,7 @@ export const DashboardHeader = () => {
                     <img
                       src={competitor.logo}
                       alt={competitor.name}
-                      className="w-6 h-6 object-contain"
+                      className="w-5 h-5 object-contain"
                       onError={(e) => {
                         e.currentTarget.src = "https://via.placeholder.com/24";
                       }}
