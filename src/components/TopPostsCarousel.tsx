@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,  } from "react";
 import { Eye, Heart, MessageCircle, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Post {
   id: number;
@@ -17,6 +18,7 @@ interface TopPostsCarouselProps {
 }
 
 export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
     return () => clearInterval(interval);
   }, [posts.length]);
 
-  const handlePostClick = (id: number) => {
-    window.location.href = `/posts/${id}`;
+  const handlePostClick = () => {
+    navigate('/posts');
   };
 
   return (
@@ -46,7 +48,7 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
           return (
             <div
               key={post.id}
-              onClick={() => handlePostClick(post.id)}
+              onClick={() => handlePostClick()}
               className={`
                 absolute inset-0 transition-all duration-500 cursor-pointer
                 ${isActive ? 'translate-y-0 opacity-100 z-10' : ''}

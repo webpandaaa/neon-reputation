@@ -10,7 +10,7 @@ interface PostCardProps {
 export const PostCard = ({ post }: PostCardProps) => {
   return (
     <Link to={`/posts/${post.id}`}>
-      <Card className="glass border-border/50 p-6 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer group">
+      <Card className="glass border-border/50 p-6 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] cursor-pointer group mb-3">
         <div className="flex items-start gap-4">
           {/* User Avatar */}
           <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">

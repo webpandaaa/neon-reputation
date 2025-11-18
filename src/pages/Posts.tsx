@@ -6,6 +6,9 @@ import { PostFilters } from "@/components/PostFilters";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { allPosts } from "@/data/mockPosts";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Eye, Heart, MessageCircle, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Posts = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,9 +73,16 @@ const Posts = () => {
 
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">All Posts</h1>
-            <p className="text-muted-foreground">Browse and search through all posts</p>
+          <div className="mb-8 flex items-center gap-4">
+            <Link to="/">
+            <Button variant="ghost" className=" group">
+              <ArrowLeft className="transition-transform group-hover:-translate-x-1" />
+            </Button>
+          </Link>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground mb-2">All Posts</h1>
+              <p className="text-muted-foreground">Browse and search through all posts</p>
+            </div>
           </div>
 
           {/* Search and Filters */}

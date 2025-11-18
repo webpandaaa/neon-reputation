@@ -36,7 +36,7 @@ const employerData = {
       views: 45230,
       likes: 3420,
       comments: 567,
-      url: "https://www.glassdoor.com/Reviews/Employee-Review.htm",
+      url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
       id: 2,
@@ -44,7 +44,7 @@ const employerData = {
       views: 38950,
       likes: 2890,
       comments: 423,
-      url: "https://www.glassdoor.com/Reviews/Employee-Review.htm",
+      url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
       id: 3,
@@ -52,7 +52,7 @@ const employerData = {
       views: 35670,
       likes: 2650,
       comments: 389,
-      url: "https://www.glassdoor.com/Reviews/Employee-Review.htm",
+      url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
       id: 4,
@@ -60,7 +60,7 @@ const employerData = {
       views: 32100,
       likes: 2340,
       comments: 312,
-      url: "https://www.glassdoor.com/Reviews/Employee-Review.htm",
+      url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
       id: 5,
@@ -68,7 +68,7 @@ const employerData = {
       views: 29800,
       likes: 2120,
       comments: 278,
-      url: "https://www.glassdoor.com/Reviews/Employee-Review.htm",
+      url: "https://www.trustpilot.com/review/insurance-company",
     },
   ],
 };
