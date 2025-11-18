@@ -27,8 +27,8 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
     return () => clearInterval(interval);
   }, [posts.length]);
 
-  const handlePostClick = (url: string) => {
-    window.open(url, "_blank", "noopener,noreferrer");
+  const handlePostClick = (id: number) => {
+    window.location.href = `/posts/${id}`;
   };
 
   return (
@@ -46,7 +46,7 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
           return (
             <div
               key={post.id}
-              onClick={() => handlePostClick(post.url)}
+              onClick={() => handlePostClick(post.id)}
               className={`
                 absolute inset-0 transition-all duration-500 cursor-pointer
                 ${isActive ? 'translate-y-0 opacity-100 z-10' : ''}
