@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Eye, Heart, MessageCircle, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Eye, Heart, MessageCircle, ThumbsUp, ThumbsDown, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 
 interface Review {
   text: string;
@@ -30,12 +31,23 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
   const colorClass = isPositive ? "green" : "red";
 
   return (
-    <Card className={`glass border-border/50 p-6 hover:border-${colorClass}-500/30 transition-all duration-500 hover:shadow-xl`}>
-      <div className="flex items-center gap-3 mb-4">
-        <Icon className={`w-6 h-6 text-${colorClass}-500`} />
-        <h2 className="text-xl font-bold text-foreground">
-          Top 5 {isPositive ? "Positive" : "Negative"} Reviews
-        </h2>
+    <Card className={`glass border-border/50 p-6 transition-all duration-500 hover:shadow-xl relative ${
+      isPositive ? 'hover:border-green-500/30' : 'hover:border-red-500/30'
+    }`}>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <Icon className={`w-6 h-6 ${isPositive ? 'text-green-500' : 'text-red-500'}`} />
+          <h2 className="text-xl font-bold text-foreground">
+            Top 5 {isPositive ? "Positive" : "Negative"} Reviews
+          </h2>
+        </div>
+        <Link 
+          to="/posts" 
+          className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors group"
+        >
+          <span>Show More</span>
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </div>
 
       <div className="relative h-40 overflow-hidden">
@@ -53,7 +65,13 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
                 ${!isActive && !isPrevious ? 'translate-y-full opacity-0 z-0' : ''}
               `}
             >
-              <div className={`h-full p-4 rounded-lg bg-${colorClass}-500/10 border border-${colorClass}-500/20 hover:bg-${colorClass}-500/20 transition-all duration-300`}>
+              <div 
+                className={`h-full p-4 rounded-lg border transition-all duration-300 ${
+                  isPositive 
+                    ? 'bg-gradient-to-br from-green-500/10 via-green-500/5 to-transparent border-green-500/20 hover:from-green-500/20 hover:via-green-500/10' 
+                    : 'bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent border-red-500/20 hover:from-red-500/20 hover:via-red-500/10'
+                }`}
+              >
                 <p className="text-sm text-foreground mb-4 line-clamp-3">
                   {review.text}
                 </p>
@@ -87,7 +105,7 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
             className={`
               h-1.5 rounded-full transition-all duration-300
               ${index === currentIndex 
-                ? `w-8 bg-${colorClass}-500` 
+                ? `w-8 ${isPositive ? 'bg-green-500' : 'bg-red-500'}` 
                 : 'w-1.5 bg-muted hover:bg-muted-foreground/50'
               }
             `}
