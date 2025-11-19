@@ -38,16 +38,10 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
         <div className="flex items-center gap-3">
           <Icon className={`w-6 h-6 ${isPositive ? 'text-green-500' : 'text-red-500'}`} />
           <h2 className="text-xl font-bold text-foreground">
-            Top 5 {isPositive ? "Positive" : "Negative"} Reviews
+            Top  {isPositive ? "Positive" : "Negative"} Reviews
           </h2>
         </div>
-        <Link 
-          to="/posts" 
-          className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors group"
-        >
-          <span>Show More</span>
-          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-        </Link>
+        
       </div>
 
       <div className="relative h-40 overflow-hidden">
@@ -94,6 +88,16 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
             </div>
           );
         })}
+      </div>
+
+      <div className="">
+        <Link 
+          to="/posts" 
+          className="flex items-center justify-end mt-3 gap-2 text-sm text-primary hover:text-primary/80 transition-colors group"
+        >
+          <span>Show More</span>
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+      </Link>
       </div>
 
       {/* Progress Indicators */}

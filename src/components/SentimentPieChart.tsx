@@ -13,6 +13,30 @@ const COLORS = {
   Neutral: "hsl(45 5% 50%)",
 };
 
+// ⭐ Custom tooltip component
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload || !payload.length) return null;
+
+  const { name, value } = payload[0].payload;
+  const textColor = COLORS[name as keyof typeof COLORS];
+
+  return (
+    <div
+      style={{
+        backgroundColor: "hsl(var(--card))",
+        border: "1px solid hsl(var(--border))",
+        borderRadius: "12px",
+        padding: "10px",
+        boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+      }}
+    >
+      <p style={{ color: textColor, fontWeight: 600 }}>
+        {name}: {value}
+      </p>
+    </div>
+  );
+};
+
 export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
   return (
     <div className="glass rounded-2xl p-6 border border-border/50 hover:border-secondary/30 transition-all duration-500 hover:shadow-xl animate-scale-in">
@@ -30,7 +54,6 @@ export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
             labelLine={false}
             label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
             outerRadius={100}
-            fill="#8884d8"
             dataKey="value"
           >
             {data.map((entry, index) => (
@@ -42,21 +65,15 @@ export const SentimentPieChart = ({ data }: SentimentPieChartProps) => {
               />
             ))}
           </Pie>
-          <Tooltip
-            contentStyle={{
-              backgroundColor: 'hsl(var(--card))',
-              border: '1px solid hsl(var(--border))',
-              borderRadius: '12px',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
-            }}
-            itemStyle={{ color: 'white' }}
-            labelStyle={{ color: 'white' }}
-          />
+
+          {/* ⭐ use our custom tooltip */}
+          <Tooltip content={<CustomTooltip />} />
+
           <Legend
             iconType="circle"
             wrapperStyle={{
-              paddingTop: '20px',
-              fontSize: '14px',
+              paddingTop: "20px",
+              fontSize: "14px",
             }}
           />
         </PieChart>
