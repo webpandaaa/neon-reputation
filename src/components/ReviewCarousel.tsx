@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Eye, Heart, MessageCircle, ThumbsUp, ThumbsDown, ArrowRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Review {
+  id: number;
   text: string;
   views: number;
   likes: number;
@@ -16,6 +17,7 @@ interface ReviewCarouselProps {
 }
 
 export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -29,6 +31,10 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
   const isPositive = type === "positive";
   const Icon = isPositive ? ThumbsUp : ThumbsDown;
   const colorClass = isPositive ? "green" : "red";
+
+  const handleReviewClick = (reviewId: number) => {
+    navigate(`/posts/${reviewId}`);
+  };
 
   return (
     <Card className={`glass border-border/50 p-6 transition-all duration-500 hover:shadow-xl relative ${
@@ -52,8 +58,9 @@ export const ReviewCarousel = ({ reviews, type }: ReviewCarouselProps) => {
           return (
             <div
               key={index}
+              onClick={() => handleReviewClick(review.id)}
               className={`
-                absolute inset-0 transition-all duration-500
+                absolute inset-0 transition-all duration-500 cursor-pointer
                 ${isActive ? 'translate-y-0 opacity-100 z-10' : ''}
                 ${isPrevious ? '-translate-y-full opacity-0 z-0' : ''}
                 ${!isActive && !isPrevious ? 'translate-y-full opacity-0 z-0' : ''}
