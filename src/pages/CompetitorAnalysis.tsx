@@ -121,92 +121,143 @@ export default function CompetitorAnalysis() {
   return (
     <>
       <DashboardHeader />
-      <div className="min-h-screen bg-background p-6 relative">
+      <div className="min-h-screen bg-background relative overflow-hidden">
         <AnimatedBackground />
-        <div className="container mx-auto space-y-6">
-          {/* Header */}
-          <div className="flex items-center gap-4 mb-8 animate-fade-in">
-            <img
-              src={data.logo} 
-              alt={data.name}
-              className="w-16 h-16 object-contain"
-              onError={(e) => {
-                e.currentTarget.src = "https://via.placeholder.com/64";
-              }}
-            />
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                {data.name} Analysis
-              </h1>
-              <p className="text-muted-foreground">Competitor Intelligence & Insights</p>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 relative z-10">
+          {/* Premium Header Section */}
+          <div className="glass rounded-3xl p-8 border border-border/50 backdrop-blur-xl animate-fade-in hover:border-primary/30 transition-all duration-500 hover:shadow-2xl">
+            <div className="flex items-center gap-6">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-500" />
+                <div className="relative glass p-4 rounded-2xl border border-border/50">
+                  <img
+                    src={data.logo} 
+                    alt={data.name}
+                    className="w-20 h-20 object-contain transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://via.placeholder.com/80";
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                  {data.name}
+                </h1>
+                <p className="text-lg text-muted-foreground flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  Competitor Intelligence & Insights
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-in">
-            <TrendChart data={data.trendData} />
-            <SentimentPieChart data={data.sentimentData} />
+          {/* Analytics Charts Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 px-2">
+              <div className="h-8 w-1 bg-gradient-to-b from-primary to-accent rounded-full" />
+              <h2 className="text-2xl font-bold text-foreground">Performance Analytics</h2>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-in">
+              <div className="glass rounded-2xl p-6 border border-border/50 backdrop-blur-xl hover:border-primary/30 transition-all duration-500 hover:shadow-2xl group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative">
+                  <TrendChart data={data.trendData} />
+                </div>
+              </div>
+              <div className="glass rounded-2xl p-6 border border-border/50 backdrop-blur-xl hover:border-accent/30 transition-all duration-500 hover:shadow-2xl group relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative">
+                  <SentimentPieChart data={data.sentimentData} />
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Top Posts Analysis */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
-            <ReviewCarousel reviews={data.topPositive} type="positive" />
-            <ReviewCarousel reviews={data.topNegative} type="negative" />
+          {/* Review Analysis Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 px-2">
+              <div className="h-8 w-1 bg-gradient-to-b from-accent to-secondary rounded-full" />
+              <h2 className="text-2xl font-bold text-foreground">Review Highlights</h2>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
+              <ReviewCarousel reviews={data.topPositive} type="positive" />
+              <ReviewCarousel reviews={data.topNegative} type="negative" />
+            </div>
           </div>
 
-          {/* Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-scale-in">
-            {/* What to Avoid */}
-            <Card className="glass border-border/50 p-6 hover:border-yellow-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <AlertTriangle className="w-6 h-6 text-yellow-500" />
-                <h2 className="text-xl font-bold text-foreground">What to Avoid</h2>
-              </div>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Don't increase premiums without transparent communication</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Avoid complex policy terms that confuse customers</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Don't neglect digital platform modernization</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Avoid inconsistent service quality across touchpoints</span>
-                </li>
-              </ul>
-            </Card>
+          {/* Strategic Insights Section */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 px-2">
+              <div className="h-8 w-1 bg-gradient-to-b from-secondary to-primary rounded-full" />
+              <h2 className="text-2xl font-bold text-foreground">Strategic Insights</h2>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-scale-in">
+              {/* What to Avoid Card */}
+              <Card className="group relative overflow-hidden glass border-border/50 backdrop-blur-xl hover:border-yellow-500/40 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]">
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full blur-3xl -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
+                <div className="relative p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-yellow-500/20 to-yellow-600/10 border border-yellow-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <AlertTriangle className="w-7 h-7 text-yellow-500" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">What to Avoid</h2>
+                  </div>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-yellow-500/5 transition-colors duration-300">
+                      <span className="text-yellow-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Don't increase premiums without transparent communication</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-yellow-500/5 transition-colors duration-300">
+                      <span className="text-yellow-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Avoid complex policy terms that confuse customers</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-yellow-500/5 transition-colors duration-300">
+                      <span className="text-yellow-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Don't neglect digital platform modernization</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-yellow-500/5 transition-colors duration-300">
+                      <span className="text-yellow-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Avoid inconsistent service quality across touchpoints</span>
+                    </li>
+                  </ul>
+                </div>
+              </Card>
 
-            {/* What to Follow */}
-            <Card className="glass border-border/50 p-6 hover:border-blue-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <Lightbulb className="w-6 h-6 text-blue-500" />
-                <h2 className="text-xl font-bold text-foreground">Best Practices to Follow</h2>
-              </div>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Invest in excellent customer service and quick response times</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Develop user-friendly digital platforms and mobile apps</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Offer transparent communication and regular updates</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Provide 24/7 support across multiple channels</span>
-                </li>
-              </ul>
-            </Card>
+              {/* Best Practices Card */}
+              <Card className="group relative overflow-hidden glass border-border/50 backdrop-blur-xl hover:border-blue-500/40 transition-all duration-500 hover:shadow-2xl hover:scale-[1.02]">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-16 translate-x-16 group-hover:scale-150 transition-transform duration-700" />
+                <div className="relative p-8">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/30 group-hover:scale-110 transition-transform duration-300">
+                      <Lightbulb className="w-7 h-7 text-blue-500" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-foreground">Best Practices</h2>
+                  </div>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-500/5 transition-colors duration-300">
+                      <span className="text-blue-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Provide clear and transparent communication</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-500/5 transition-colors duration-300">
+                      <span className="text-blue-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Invest in user-friendly digital platforms</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-500/5 transition-colors duration-300">
+                      <span className="text-blue-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Maintain consistent service excellence</span>
+                    </li>
+                    <li className="flex items-start gap-3 p-3 rounded-lg hover:bg-blue-500/5 transition-colors duration-300">
+                      <span className="text-blue-500 text-lg font-bold mt-0.5">•</span>
+                      <span className="text-sm text-foreground/80 leading-relaxed">Offer flexible and customizable policies</span>
+                    </li>
+                  </ul>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
