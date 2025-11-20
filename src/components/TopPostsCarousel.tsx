@@ -50,8 +50,8 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
               key={post.id}
               onClick={() => handlePostClick(post.id)}
               className={`
-                absolute inset-0 transition-all duration-500 cursor-pointer
-                ${isActive ? 'translate-y-0 opacity-100 z-10' : ''}
+                absolute inset-0 transition-all duration-500
+                ${isActive ? 'translate-y-0 opacity-100 z-10 cursor-pointer' : 'pointer-events-none'}
                 ${isPrevious ? '-translate-y-full opacity-0 z-0' : ''}
                 ${!isActive && !isPrevious ? 'translate-y-full opacity-0 z-0' : ''}
               `}
