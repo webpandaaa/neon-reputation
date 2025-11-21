@@ -5,7 +5,8 @@ import { TrendChart } from "@/components/TrendChart";
 import { SentimentPieChart } from "@/components/SentimentPieChart";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
-import { AlertTriangle, Lightbulb } from "lucide-react";
+import { AlertTriangle, Lightbulb, TrendingUp, TrendingDown, Activity, BarChart3 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const competitorData: Record<string, any> = {
   "allianz": {
@@ -118,96 +119,180 @@ export default function CompetitorAnalysis() {
     );
   }
 
+  // Calculate key metrics
+  const positivePercentage = data.sentimentData.find((s: any) => s.name === "Positive")?.value || 0;
+  const negativePercentage = data.sentimentData.find((s: any) => s.name === "Negative")?.value || 0;
+  const currentYearData = data.trendData[data.trendData.length - 1];
+
   return (
     <>
       <DashboardHeader />
-      <div className="min-h-screen bg-background p-6 relative">
+      <div className="min-h-screen bg-background relative">
         <AnimatedBackground />
-        <div className="container mx-auto space-y-6">
-          {/* Header */}
-          <div className="flex items-center gap-4 mb-8 animate-fade-in">
-            <img
-              src={data.logo} 
-              alt={data.name}
-              className="w-16 h-16 object-contain"
-              onError={(e) => {
-                e.currentTarget.src = "https://via.placeholder.com/64";
-              }}
-            />
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                {data.name} Analysis
-              </h1>
-              <p className="text-muted-foreground">Competitor Intelligence & Insights</p>
+        
+        <div className="container mx-auto px-4 py-8 space-y-8">
+          {/* Hero Section */}
+          <div className="relative overflow-hidden rounded-2xl glass border-border/50 p-8 animate-fade-in">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 pointer-events-none" />
+            
+            <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="flex items-center gap-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
+                  <img
+                    src={data.logo} 
+                    alt={data.name}
+                    className="relative w-20 h-20 object-contain rounded-xl bg-card/50 p-3 backdrop-blur-sm"
+                    onError={(e) => {
+                      e.currentTarget.src = "https://via.placeholder.com/80";
+                    }}
+                  />
+                </div>
+                <div>
+                  <h1 className="text-4xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-2">
+                    {data.name}
+                  </h1>
+                  <p className="text-muted-foreground text-lg">Competitive Intelligence Dashboard</p>
+                </div>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="flex gap-4">
+                <div className="glass border-border/50 rounded-xl p-4 min-w-[120px]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <TrendingUp className="w-4 h-4 text-success" />
+                    <span className="text-xs text-muted-foreground">Positive</span>
+                  </div>
+                  <div className="text-2xl font-bold text-success">{positivePercentage}%</div>
+                </div>
+                
+                <div className="glass border-border/50 rounded-xl p-4 min-w-[120px]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <TrendingDown className="w-4 h-4 text-destructive" />
+                    <span className="text-xs text-muted-foreground">Negative</span>
+                  </div>
+                  <div className="text-2xl font-bold text-destructive">{negativePercentage}%</div>
+                </div>
+
+                <div className="glass border-border/50 rounded-xl p-4 min-w-[120px]">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Activity className="w-4 h-4 text-primary" />
+                    <span className="text-xs text-muted-foreground">Trend</span>
+                  </div>
+                  <div className="text-2xl font-bold text-foreground">{currentYearData.positive}</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-in">
-            <TrendChart data={data.trendData} />
-            <SentimentPieChart data={data.sentimentData} />
-          </div>
+          {/* Tabbed Content */}
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 lg:w-[600px] mx-auto glass">
+              <TabsTrigger value="overview" className="gap-2">
+                <BarChart3 className="w-4 h-4" />
+                <span>Overview</span>
+              </TabsTrigger>
+              <TabsTrigger value="reviews" className="gap-2">
+                <Activity className="w-4 h-4" />
+                <span>Top Reviews</span>
+              </TabsTrigger>
+              <TabsTrigger value="insights" className="gap-2">
+                <Lightbulb className="w-4 h-4" />
+                <span>Insights</span>
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Top Posts Analysis */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
-            <ReviewCarousel reviews={data.topPositive} type="positive" />
-            <ReviewCarousel reviews={data.topNegative} type="negative" />
-          </div>
-
-          {/* Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-scale-in">
-            {/* What to Avoid */}
-            <Card className="glass border-border/50 p-6 hover:border-yellow-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <AlertTriangle className="w-6 h-6 text-yellow-500" />
-                <h2 className="text-xl font-bold text-foreground">What to Avoid</h2>
+            {/* Overview Tab */}
+            <TabsContent value="overview" className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <TrendChart data={data.trendData} />
+                <SentimentPieChart data={data.sentimentData} />
               </div>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Don't increase premiums without transparent communication</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Avoid complex policy terms that confuse customers</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Don't neglect digital platform modernization</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-yellow-500 mt-1">•</span>
-                  <span>Avoid inconsistent service quality across touchpoints</span>
-                </li>
-              </ul>
-            </Card>
+            </TabsContent>
 
-            {/* What to Follow */}
-            <Card className="glass border-border/50 p-6 hover:border-blue-500/30 transition-all duration-500 hover:shadow-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <Lightbulb className="w-6 h-6 text-blue-500" />
-                <h2 className="text-xl font-bold text-foreground">Best Practices to Follow</h2>
+            {/* Reviews Tab */}
+            <TabsContent value="reviews" className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ReviewCarousel reviews={data.topPositive} type="positive" />
+                <ReviewCarousel reviews={data.topNegative} type="negative" />
               </div>
-              <ul className="space-y-2">
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Invest in excellent customer service and quick response times</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Develop user-friendly digital platforms and mobile apps</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Offer transparent communication and regular updates</span>
-                </li>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>Provide 24/7 support across multiple channels</span>
-                </li>
-              </ul>
-            </Card>
-          </div>
+            </TabsContent>
+
+            {/* Insights Tab */}
+            <TabsContent value="insights" className="space-y-6 animate-fade-in">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* What to Avoid */}
+                <Card className="glass border-border/50 p-6 hover:border-destructive/30 transition-all duration-500 hover:shadow-xl group">
+                  <div className="relative">
+                    <div className="absolute -inset-2 bg-destructive/5 blur-xl rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    <div className="relative space-y-6">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-destructive/10 border border-destructive/20">
+                          <AlertTriangle className="w-6 h-6 text-destructive" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-foreground">What to Avoid</h2>
+                      </div>
+                      
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/10 transition-all hover:border-destructive/30">
+                          <span className="text-destructive mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Don't increase premiums without transparent communication</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/10 transition-all hover:border-destructive/30">
+                          <span className="text-destructive mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Avoid complex policy terms that confuse customers</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/10 transition-all hover:border-destructive/30">
+                          <span className="text-destructive mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Don't neglect digital platform modernization</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/10 transition-all hover:border-destructive/30">
+                          <span className="text-destructive mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Avoid inconsistent service quality across touchpoints</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* What to Follow */}
+                <Card className="glass border-border/50 p-6 hover:border-success/30 transition-all duration-500 hover:shadow-xl group">
+                  <div className="relative">
+                    <div className="absolute -inset-2 bg-success/5 blur-xl rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
+                    
+                    <div className="relative space-y-6">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-success/10 border border-success/20">
+                          <Lightbulb className="w-6 h-6 text-success" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-foreground">Best Practices</h2>
+                      </div>
+                      
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-success/5 border border-success/10 transition-all hover:border-success/30">
+                          <span className="text-success mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Invest in excellent customer service and quick response times</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-success/5 border border-success/10 transition-all hover:border-success/30">
+                          <span className="text-success mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Develop user-friendly digital platforms and mobile apps</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-success/5 border border-success/10 transition-all hover:border-success/30">
+                          <span className="text-success mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Offer transparent communication and regular updates</span>
+                        </li>
+                        <li className="flex items-start gap-3 p-3 rounded-lg bg-success/5 border border-success/10 transition-all hover:border-success/30">
+                          <span className="text-success mt-1 font-bold">•</span>
+                          <span className="text-sm text-foreground">Provide 24/7 support across multiple channels</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </>
