@@ -96,7 +96,7 @@ const insuranceData = {
   ],
   topPosts: [
     {
-      id: 1,
+      id: 6,
       title: "Excellent Customer Service and Fast Claims Processing - Highly Satisfied",
       views: 52340,
       likes: 4120,
@@ -104,7 +104,7 @@ const insuranceData = {
       url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
-      id: 2,
+      id: 7,
       title: "Transparent Pricing and Comprehensive Coverage Options",
       views: 48760,
       likes: 3890,
@@ -112,7 +112,7 @@ const insuranceData = {
       url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
-      id: 3,
+      id: 8,
       title: "Digital Platform is User-Friendly and Efficient",
       views: 42890,
       likes: 3320,
@@ -120,7 +120,7 @@ const insuranceData = {
       url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
-      id: 4,
+      id: 9,
       title: "Great Support Team - Always Available When Needed",
       views: 39500,
       likes: 2980,
@@ -128,7 +128,7 @@ const insuranceData = {
       url: "https://www.trustpilot.com/review/insurance-company",
     },
     {
-      id: 5,
+      id: 10,
       title: "Best Insurance Provider - Smooth Experience Throughout",
       views: 36200,
       likes: 2750,
