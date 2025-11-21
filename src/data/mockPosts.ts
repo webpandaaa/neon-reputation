@@ -28,19 +28,6 @@ export const allPosts: Post[] = [
   },
   {
     id: 2,
-    title: "Emgality question, losing insurance",
-    excerpt: "Has anyone dealt with losing their insurance while on Emgality? Looking for advice on how to manage this situation...",
-    author: "r/cgrpMigraine",
-    date: "14h ago",
-    likes: 289,
-    views: 3895,
-    comments: 42,
-    content: "I'm currently on Emgality and it's been working great for my migraines. However, I'm losing my insurance coverage next month and I'm worried about how to continue my treatment. Has anyone been in a similar situation? What options are available for continuing this medication without insurance? Any advice would be greatly appreciated.",
-    subreddit: "cgrpMigraine",
-    timestamp: "2025-11-16T20:00:00Z"
-  },
-  {
-    id: 3,
     title: "Amazing Benefits Package and Career Growth Opportunities",
     excerpt: "The benefits here are top-notch. From health insurance to retirement plans, they've got everything covered...",
     author: "r/careerguidance",
@@ -53,7 +40,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-16T10:00:00Z"
   },
   {
-    id: 4,
+    id: 3,
     title: "Work-Life Balance is Outstanding - Highly Recommend",
     excerpt: "Finally found a company that actually respects your personal time. No more late night emails or weekend work...",
     author: "r/jobs",
@@ -66,7 +53,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-15T14:00:00Z"
   },
   {
-    id: 5,
+    id: 4,
     title: "Innovation-Driven Company with Strong Leadership Vision",
     excerpt: "Leadership here is visionary and encourages innovative thinking. They're always looking for new ways to improve...",
     author: "r/technology",
@@ -79,7 +66,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-14T09:00:00Z"
   },
   {
-    id: 6,
+    id: 5,
     title: "Supportive Team Environment and Competitive Compensation",
     excerpt: "The team here is incredibly supportive. Everyone helps each other out and the compensation is very competitive...",
     author: "r/humanresources",
@@ -92,7 +79,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-13T16:00:00Z"
   },
   {
-    id: 7,
+    id: 6,
     title: "Excellent Customer Service and Fast Claims Processing",
     excerpt: "Had to file a claim recently and was amazed at how smooth the process was. Customer service was responsive...",
     author: "r/Insurance",
@@ -105,7 +92,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-12T11:00:00Z"
   },
   {
-    id: 8,
+    id: 7,
     title: "Transparent Pricing and Comprehensive Coverage Options",
     excerpt: "Really appreciate the transparent pricing model. No hidden fees or surprise charges. Coverage options are comprehensive...",
     author: "r/personalfinance",
@@ -118,7 +105,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-11T13:00:00Z"
   },
   {
-    id: 9,
+    id: 8,
     title: "Digital Platform is User-Friendly and Efficient",
     excerpt: "The digital platform makes everything so easy. From getting quotes to managing policies, it's all streamlined...",
     author: "r/technology",
@@ -131,7 +118,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-10T15:00:00Z"
   },
   {
-    id: 10,
+    id: 9,
     title: "Professional Claims Adjusters and Fair Settlements",
     excerpt: "The claims adjusters were professional and fair. They listened to my concerns and worked to reach a fair settlement...",
     author: "r/Insurance",
@@ -144,7 +131,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-09T08:00:00Z"
   },
   {
-    id: 11,
+    id: 10,
     title: "Responsive Customer Support Team Available 24/7",
     excerpt: "Customer support is available round the clock which is a huge plus. Had an emergency at 2am and they answered immediately...",
     author: "r/customerservice",
@@ -157,7 +144,7 @@ export const allPosts: Post[] = [
     timestamp: "2025-11-03T02:00:00Z"
   },
   {
-    id: 12,
+    id: 11,
     title: "Employment Insurance - Quick Approval Process",
     excerpt: "Applied for employment insurance and got approved within a week. The process was straightforward and efficient...",
     author: "r/povertyfinancecanada",
@@ -168,5 +155,18 @@ export const allPosts: Post[] = [
     content: "Applied for employment insurance and got approved within a week. The process was straightforward with clear instructions at every step. Very grateful for the quick turnaround time.",
     subreddit: "povertyfinancecanada",
     timestamp: "2025-11-02T12:00:00Z"
+  },
+  {
+    id: 12,
+    title: "Emgality question, losing insurance",
+    excerpt: "Has anyone dealt with losing their insurance while on Emgality? Looking for advice on how to manage this situation...",
+    author: "r/cgrpMigraine",
+    date: "14h ago",
+    likes: 289,
+    views: 3895,
+    comments: 42,
+    content: "I'm currently on Emgality and it's been working great for my migraines. However, I'm losing my insurance coverage next month and I'm worried about how to continue my treatment. Has anyone been in a similar situation? What options are available for continuing this medication without insurance? Any advice would be greatly appreciated.",
+    subreddit: "cgrpMigraine",
+    timestamp: "2025-02-16T20:00:00Z"
   }
 ];
