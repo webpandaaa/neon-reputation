@@ -144,7 +144,7 @@ export default function CompetitorAnalysis() {
 
           {/* Charts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-slide-in">
-            <TrendChart data={data.trendData} />
+            <TrendChart yearlyData={data.trendData} monthlyData={data.trendData} />
             <SentimentPieChart data={data.sentimentData} />
           </div>
 

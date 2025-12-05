@@ -40,7 +40,7 @@ export const PostCard = ({ post }: PostCardProps) => {
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <div className="flex items-center gap-1.5">
                 <Heart className="w-4 h-4 text-secondary" />
-                <span>{post.likes.toLocaleString()}</span>
+                <span>{post.likes }</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <MessageCircle className="w-4 h-4 text-accent" />
@@ -48,7 +48,7 @@ export const PostCard = ({ post }: PostCardProps) => {
               </div>
               <div className="flex items-center gap-1.5">
                 <Eye className="w-4 h-4 text-primary" />
-                <span>{post.views.toLocaleString()}</span>
+                <span>{post.views}</span>
               </div>
             </div>
           </div>
