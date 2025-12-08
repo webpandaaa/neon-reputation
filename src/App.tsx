@@ -12,6 +12,7 @@ import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import AllianzPosts from "./pages/AllianzPosts";
+import { ChatBot } from "./components/ChatBot";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ const App = () => (
               </Routes>
             </div>
             <Footer />
+            <ChatBot />
           </div>
         </BrowserRouter>
       </TooltipProvider>
