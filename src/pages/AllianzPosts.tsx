@@ -1,19 +1,20 @@
 import { useState, useMemo, useEffect } from "react";
-import { Search, ArrowLeft } from "lucide-react";
+import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { PostCard } from "@/components/PostCard";
+import { PostFilters } from "@/components/PostFilters";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { TimeFilter } from "@/components/TimeFilter";
 
 export interface Post {
   id: number;
   title: string;
   excerpt: string;
   author: string;
-  date: string; 
+  date: string;
   likes: number;
   views: number;
   comments: number;
@@ -23,26 +24,27 @@ export interface Post {
   url: string;
 }
 
-const Posts = () => {
+
+const AllianzPosts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [timeRange, setTimeRange] = useState("all");
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await fetch(
-          "https://sagargo.app.n8n.cloud/webhook/ergo-allposts"
+          "https://sagargo.app.n8n.cloud/webhook/allianz-allposts"
         );
         const data = await res.json();
-
         const mapped = data.map((p: any) => ({
           id: p.id,
           title: p.title,
           excerpt: p.content?.slice(0, 120) + "...",
-          author: p.source || "Unknown",
-          date: p.date, // "2d ago"
+          author: p.author || "Unknown",
+          date: p.date,
           likes: p.total_likes,
           views: p.view_count,
           comments: p.total_comments,
@@ -51,6 +53,7 @@ const Posts = () => {
           timestamp: p.published_at,
           url: p.url,
         }));
+        console.log(data.map(p => p.timestamp));
 
         setPosts(mapped);
         setLoading(false);
@@ -63,57 +66,36 @@ const Posts = () => {
     fetchPosts();
   }, []);
 
-  /** Convert "2d ago", "3w ago", "1mo ago" to a timestamp */
-  const parseRelativeDate = (str: string): number => {
-    if (!str) return Date.now();
-
-    const now = Date.now();
-
-    if (str.includes("d")) {
-      const days = parseInt(str);
-      return now - days * 24 * 60 * 60 * 1000;
-    }
-
-    if (str.includes("w")) {
-      const weeks = parseInt(str);
-      return now - weeks * 7 * 24 * 60 * 60 * 1000;
-    }
-
-    if (str.includes("mo")) {
-      const months = parseInt(str);
-      return now - months * 30 * 24 * 60 * 60 * 1000;
-    }
-
-    return now;
-  };
 
   const filteredPosts = useMemo(() => {
     if (loading) return [];
 
     let filtered = [...posts];
 
-    // TEXT SEARCH
+    // Search filtering
     if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+      const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
         (post) =>
-          post.title.toLowerCase().includes(q) ||
-          post.excerpt.toLowerCase().includes(q) ||
-          post.author.toLowerCase().includes(q)
+          post.title.toLowerCase().includes(query) ||
+          post.excerpt.toLowerCase().includes(query) ||
+          post.author.toLowerCase().includes(query)
       );
     }
 
-    // TIME RANGE FILTER
+
     if (timeRange !== "all") {
       const now = Date.now();
 
       filtered = filtered.filter((post) => {
-        const postTime = parseRelativeDate(post.date);
+        const postTime = Date.parse(post.timestamp);
+        if (isNaN(postTime)) return false;
+
         const diff = now - postTime;
 
         switch (timeRange) {
           case "today":
-            return diff <= 1 * 24 * 60 * 60 * 1000;
+            return diff <= 24 * 60 * 60 * 1000;
           case "week":
             return diff <= 7 * 24 * 60 * 60 * 1000;
           case "month":
@@ -126,6 +108,9 @@ const Posts = () => {
       });
     }
 
+
+
+
     return filtered;
   }, [searchQuery, timeRange, posts, loading]);
 
@@ -137,7 +122,7 @@ const Posts = () => {
         <DashboardHeader />
 
         <div className="container mx-auto px-4 py-8">
-          {/* HEADER */}
+          {/* Header */}
           <div className="mb-8 flex items-center gap-4">
             <Link to="/">
               <Button variant="ghost" className="group">
@@ -147,7 +132,7 @@ const Posts = () => {
 
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                All Posts
+                Allianz Posts
               </h1>
               <p className="text-muted-foreground">
                 Browse and search through all posts
@@ -155,10 +140,9 @@ const Posts = () => {
             </div>
           </div>
 
-          {/* Search + Filter */}
+          {/* Search + Filters */}
           <div className="glass border-border/50 rounded-lg p-6 mb-8">
             <div className="flex flex-col md:flex-row gap-4 justify-between">
-
               {/* Search */}
               <div className="relative flex-1 w-full md:max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -171,20 +155,22 @@ const Posts = () => {
                 />
               </div>
 
-              {/* Time filter */}
-              <TimeFilter
-                value={timeRange}
-                onChange={setTimeRange}
+              {/* Time Filters */}
+              <PostFilters
+                timeRange={timeRange}
+                onTimeRangeChange={setTimeRange}
               />
             </div>
           </div>
 
+          {/* Loading */}
           {loading && (
             <div className="text-center py-20">
               <p className="text-muted-foreground">Loading posts...</p>
             </div>
           )}
 
+          {/* No Results */}
           {!loading && filteredPosts.length === 0 && (
             <div className="glass border-border/50 rounded-lg p-12 text-center">
               <p className="text-muted-foreground">
@@ -193,6 +179,7 @@ const Posts = () => {
             </div>
           )}
 
+          {/* Posts List */}
           {!loading && (
             <div className="space-y-4">
               {filteredPosts.map((post) => (
@@ -206,4 +193,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default AllianzPosts;

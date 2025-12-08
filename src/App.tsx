@@ -11,6 +11,7 @@ import Posts from "./pages/Posts";
 import PostDetail from "./pages/PostDetail";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
+import AllianzPosts from "./pages/AllianzPosts";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
                 <Route path="/" element={<Index />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/posts" element={<Posts />} />
+                <Route path="/allianzposts" element={<AllianzPosts />} />
                 <Route path="/posts/:id" element={<PostDetail />} />
                 <Route path="/competitors/:competitor" element={<CompetitorAnalysis />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
