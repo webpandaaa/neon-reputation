@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Bot, User } from 'lucide-react';
+import { Bot, Divide, User } from 'lucide-react';
 
 interface ChatMessageProps {
   role: 'user' | 'assistant';
@@ -28,15 +28,19 @@ export const ChatMessage = ({ role, content, timestamp, meta, onSuggestionClick 
         <div
           className={cn(
             'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center',
-            isUser ? 'bg-primary text-primary-foreground' : 'bg-secondary text-secondary-foreground'
+            isUser ? 'bg-primary text-primary-foreground' : ''
           )}
         >
-          {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
+          {isUser 
+          ? <User className="w-4 h-4" /> 
+          : <div>
+            <img src="../images/onlyr.png" alt="" />
+            </div>}
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm font-medium">{isUser ? 'You' : 'AI Assistant'}</span>
+            <span className="text-sm font-medium">{isUser ? 'You' : 'Repugo'}</span>
             <span className="text-xs text-muted-foreground">
               {timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </span>

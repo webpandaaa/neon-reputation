@@ -8,6 +8,7 @@ import { TopPostsCarousel } from "@/components/TopPostsCarousel";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ThumbsUp, ThumbsDown, Minus, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Loader } from "@/components/Loader";
 
 // ----------------------
 // EMPLOYER STATIC DATA
@@ -128,8 +129,8 @@ const Index = () => {
 
   if (activeTab === "insurance" && loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white text-xl">
-        Loading Insurance Insights...
+      <div className="min-h-screen flex justify-center items-center">
+        <Loader />
       </div>
     );
   }
