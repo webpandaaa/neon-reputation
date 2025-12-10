@@ -37,25 +37,31 @@ export const PostCard = ({ post }: PostCardProps) => {
 
             {/* Excerpt */}
             <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-              {post.excerpt}
+              {post.llm_summary}
             </p>
 
             {/* Stats */}
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1.5">
-                <Heart className="w-4 h-4 text-secondary" />
-                <span>{post.likes}</span>
-              </div>
+              {+post.views > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Eye className="w-4 h-4 text-primary" />
+                      <span>{(post.views).toLocaleString()}</span>
+                    </div>
+                  )}
 
-              <div className="flex items-center gap-1.5">
-                <MessageCircle className="w-4 h-4 text-accent" />
-                <span>{post.comments}</span>
-              </div>
+                  {post.likes > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Heart className="w-4 h-4 text-secondary" />
+                      <span>{post.likes.toLocaleString()}</span>
+                    </div>
+                  )}
 
-              <div className="flex items-center gap-1.5">
-                <Eye className="w-4 h-4 text-primary" />
-                <span>{post.views}</span>
-              </div>
+                  {post.comments > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <MessageCircle className="w-4 h-4 text-accent" />
+                      <span>{post.comments.toLocaleString()}</span>
+                    </div>
+                  )}
             </div>
           </div>
         </div>

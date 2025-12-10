@@ -13,6 +13,8 @@ import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 import AllianzPosts from "./pages/AllianzPosts";
 import { ChatBot } from "./components/ChatBot";
+import SignalIdunaPosts from "./pages/SignalIdunaPosts";
+import GeneraliPosts from "./pages/GeneraliPosts";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,8 @@ const App = () => (
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/posts" element={<Posts />} />
                 <Route path="/allianzposts" element={<AllianzPosts />} />
+                <Route path="/signalidunaposts" element={<SignalIdunaPosts />} />
+                <Route path="/generaliposts" element={<GeneraliPosts />} />
                 <Route path="/posts/:id" element={<PostDetail />} />
                 <Route path="/competitors/:competitor" element={<CompetitorAnalysis />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

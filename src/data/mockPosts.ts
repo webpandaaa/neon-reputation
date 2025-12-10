@@ -11,6 +11,7 @@ export interface Post {
   subreddit?: string;
   timestamp: string;
   url : string;
+  llm_summary? : string;
 }
 
 export const allPosts: Post[] = [
@@ -29,6 +30,8 @@ export const allPosts: Post[] = [
     subreddit: "povertyfinancecanada",
     timestamp: "2025-11-17T04:00:00Z",
     url: "https://example.com/post/1",
+    llm_summary:
+      "Employees praise the exceptional work culture and supportive management, highlighting long-term satisfaction.",
   },
   {
     id: 2,
@@ -45,6 +48,8 @@ export const allPosts: Post[] = [
     subreddit: "careerguidance",
     timestamp: "2025-11-16T10:00:00Z",
     url: "https://example.com/post/2",
+    llm_summary:
+      "The company offers excellent benefits and strong career growth opportunities, making it appealing to professionals.",
   },
   {
     id: 3,
@@ -61,6 +66,8 @@ export const allPosts: Post[] = [
     subreddit: "jobs",
     timestamp: "2025-11-15T14:00:00Z",
     url: "https://example.com/post/3",
+    llm_summary:
+      "Users highlight exceptional work-life balance and a culture that respects personal time.",
   },
   {
     id: 4,
@@ -77,6 +84,8 @@ export const allPosts: Post[] = [
     subreddit: "technology",
     timestamp: "2025-11-14T09:00:00Z",
     url: "https://example.com/post/4",
+    llm_summary:
+      "The company is praised for its forward-thinking leadership and strong innovation culture.",
   },
   {
     id: 5,
@@ -93,6 +102,8 @@ export const allPosts: Post[] = [
     subreddit: "humanresources",
     timestamp: "2025-11-13T16:00:00Z",
     url: "https://example.com/post/5",
+    llm_summary:
+      "Employees appreciate the strong teamwork and competitive compensation offered by the company.",
   },
   {
     id: 6,
@@ -109,6 +120,8 @@ export const allPosts: Post[] = [
     subreddit: "Insurance",
     timestamp: "2025-11-12T11:00:00Z",
     url: "https://example.com/post/6",
+    llm_summary:
+      "Customers report fast claims processing and highly responsive customer service.",
   },
   {
     id: 7,
@@ -125,6 +138,8 @@ export const allPosts: Post[] = [
     subreddit: "personalfinance",
     timestamp: "2025-11-11T13:00:00Z",
     url: "https://example.com/post/7",
+    llm_summary:
+      "Users value the transparent pricing and wide range of coverage options available.",
   },
   {
     id: 8,
@@ -140,6 +155,8 @@ export const allPosts: Post[] = [
     subreddit: "technology",
     timestamp: "2025-11-10T15:00:00Z",
     url: "https://example.com/post/8",
+    llm_summary:
+      "The platform is praised for its ease of use, speed, and overall efficiency.",
   },
   {
     id: 9,
@@ -156,6 +173,8 @@ export const allPosts: Post[] = [
     subreddit: "Insurance",
     timestamp: "2025-11-09T08:00:00Z",
     url: "https://example.com/post/9",
+    llm_summary:
+      "Customers find claims adjusters to be fair, professional, and easy to work with.",
   },
   {
     id: 10,
@@ -172,6 +191,8 @@ export const allPosts: Post[] = [
     subreddit: "customerservice",
     timestamp: "2025-11-03T02:00:00Z",
     url: "https://example.com/post/10",
+    llm_summary:
+      "The 24/7 customer support team is praised for responsiveness and reliability.",
   },
   {
     id: 11,
@@ -188,6 +209,8 @@ export const allPosts: Post[] = [
     subreddit: "povertyfinancecanada",
     timestamp: "2025-11-02T12:00:00Z",
     url: "https://example.com/post/11",
+    llm_summary:
+      "The post highlights a quick and efficient employment insurance approval process.",
   },
   {
     id: 12,
@@ -204,6 +227,8 @@ export const allPosts: Post[] = [
     subreddit: "cgrpMigraine",
     timestamp: "2025-02-16T20:00:00Z",
     url: "https://example.com/post/12",
+    llm_summary:
+      "The author seeks advice about insurance loss while taking Emgality for migraines.",
   },
 ];
 

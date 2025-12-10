@@ -26,9 +26,10 @@ export interface Post {
   url: string;
   sentiment?: "Positive" | "Negative" | "Neutral";
   llm_summary?: string;
+  
 }
 
-const AllianzPosts = () => {
+const GeneraliPosts = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [timeRange, setTimeRange] = useState("all");
   const [sentiment, setSentiment] = useState("all");
@@ -40,7 +41,7 @@ const AllianzPosts = () => {
     const fetchPosts = async () => {
       try {
         const res = await fetch(
-          "https://sagarsarang.app.n8n.cloud/webhook/allianz-allposts"
+          "https://sagarsarang.app.n8n.cloud/webhook/generali-allposts"
         );
         const data = await res.json();
 
@@ -165,7 +166,7 @@ const AllianzPosts = () => {
 
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                Allianz Posts
+                Generali Posts
               </h1>
               <p className="text-muted-foreground">
                 Browse and search through all posts
@@ -229,4 +230,4 @@ const AllianzPosts = () => {
   );
 };
 
-export default AllianzPosts;
+export default GeneraliPosts;

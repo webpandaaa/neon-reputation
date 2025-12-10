@@ -10,6 +10,7 @@ interface Post {
   likes: number;
   comments: number;
   url: string;
+  llm_summary?: string;
 }
 
 interface TopPostsCarouselProps {
@@ -48,7 +49,7 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
           return (
             <div
               key={post.id}
-              onClick={() => handlePostClick(post.url)}  
+              onClick={() => handlePostClick(post.url)}
               className={`
                 absolute inset-0 transition-all duration-500
                 ${isActive ? "translate-y-0 opacity-100 z-10 cursor-pointer" : "pointer-events-none"}
@@ -57,24 +58,40 @@ export const TopPostsCarousel = ({ posts }: TopPostsCarouselProps) => {
               `}
             >
               <div className="h-full p-4 rounded-lg bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]">
-                <h3 className="text-base font-semibold text-foreground mb-3 line-clamp-2">
+                <h3 className="text-base font-semibold text-foreground mb-2 line-clamp-2">
                   {post.title}
                 </h3>
 
+                {post.llm_summary && (
+                  <p className="text-sm text-muted-foreground mb-3 line-clamp-3">
+                    {post.llm_summary}
+                  </p>
+                )}
+
+
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1.5">
-                    <Eye className="w-4 h-4 text-primary" />
-                    <span>{(+post.views).toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <Heart className="w-4 h-4 text-secondary" />
-                    <span>{post.likes.toLocaleString()}</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <MessageCircle className="w-4 h-4 text-accent" />
-                    <span>{post.comments.toLocaleString()}</span>
-                  </div>
+                  {+post.views > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Eye className="w-4 h-4 text-primary" />
+                      <span>{(+post.views).toLocaleString()}</span>
+                    </div>
+                  )}
+
+                  {post.likes > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <Heart className="w-4 h-4 text-secondary" />
+                      <span>{post.likes.toLocaleString()}</span>
+                    </div>
+                  )}
+
+                  {post.comments > 0 && (
+                    <div className="flex items-center gap-1.5">
+                      <MessageCircle className="w-4 h-4 text-accent" />
+                      <span>{post.comments.toLocaleString()}</span>
+                    </div>
+                  )}
                 </div>
+
               </div>
             </div>
           );

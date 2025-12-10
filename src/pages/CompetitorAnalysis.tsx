@@ -7,12 +7,19 @@ import { SentimentPieChart } from "@/components/SentimentPieChart";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ReviewCarousel } from "@/components/ReviewCarousel";
 import { AlertTriangle, Lightbulb } from "lucide-react";
-
+import { Loader } from "@/components/Loader";
 
 const apiMap: Record<string, string> = {
-  "allianz": "https://sagargo.app.n8n.cloud/webhook/allianz-insurancedata",
-  "generali": "https://your-api.com/generali",
-  "signal-iduna": "https://your-api.com/signal-iduna",
+  "allianz": "https://sagarsarang.app.n8n.cloud/webhook/alllianz-data",
+  "generali": "https://sagarsarang.app.n8n.cloud/webhook/generali-data",
+  "signal-iduna": "https://sagarsarang.app.n8n.cloud/webhook/signaliduna-data",
+};
+
+// Competitor Name and Logo mapping
+const competitorInfo: Record<string, { name: string; logo: string }> = {
+  "allianz": { name: "Allianz", logo: "../images/allianz.png" },
+  "generali": { name: "Generali", logo: "../images/generali.png" },
+  "signal-iduna": { name: "Signal Iduna", logo: "../images/signal.png" },
 };
 
 export default function CompetitorAnalysis() {
@@ -46,7 +53,6 @@ export default function CompetitorAnalysis() {
       }
     };
 
-
     fetchData();
   }, [competitor]);
 
@@ -55,8 +61,8 @@ export default function CompetitorAnalysis() {
     return (
       <>
         <DashboardHeader />
-        <div className="min-h-screen flex justify-center items-center text-muted-foreground text-lg">
-          Loading competitor insights...
+        <div className="min-h-screen flex justify-center items-center">
+          <Loader />
         </div>
       </>
     );
@@ -74,7 +80,8 @@ export default function CompetitorAnalysis() {
     );
   }
 
-  console.log(data);
+  // Get the competitor's name and logo from the mapping
+  const competitorDetails = competitorInfo[competitor];
 
   return (
     <>
@@ -83,18 +90,17 @@ export default function CompetitorAnalysis() {
         <AnimatedBackground />
 
         <div className="container mx-auto space-y-6">
-
           {/* Header */}
           <div className="flex items-center gap-4 mb-8 animate-fade-in">
             <img
-              src={data.logo}
-              alt={data.name}
-              className="w-16 h-16 object-contain"
+              src={competitorDetails.logo}
+              alt={competitorDetails.name}
+              className="w-12 h-12 object-contain"
               onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/64"; }}
             />
             <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-                {data.name} Analysis
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+                {competitorDetails.name} Analysis
               </h1>
               <p className="text-muted-foreground">Competitor Intelligence & Insights</p>
             </div>

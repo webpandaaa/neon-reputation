@@ -18,9 +18,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const competitors = [
-  { name: "Allianz", logo: "https://companieslogo.com/img/orig/ALV.DE.D-ce2f8648.png?t=1720244490" },
-  { name: "Generali", logo: "https://companieslogo.com/img/orig/G.MI.D-21c612f2.png?t=1720244491" },
-  { name: "Signal Iduna", logo: "../images/logo.png" },
+  { name: "Allianz", logo: "../images/allianz.png" },
+  { name: "Generali", logo: "../images/generali.png" },
+  { name: "Signal Iduna", logo: "../images/signal.png" },
 ];
 
 export const DashboardHeader = () => {
@@ -31,12 +31,12 @@ export const DashboardHeader = () => {
     <header className="glass border-b border-border/50 backdrop-blur-xl sticky top-0 z-50 animate-slide-in">
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-primary hover:scale-110 transition-transform duration-300">
-            <span className="text-xl font-bold text-primary-foreground">R</span>
+          <div className="w-10 h-10 rounded-xl  from-primary to-secondary flex items-center justify-center glow-primary hover:scale-110 transition-transform duration-300">
+            <span className="text-xl font-bold text-primary-foreground"><img src="../images/onlyr.png" alt="" /></span>
           </div>
           <div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
-              Online Reputation Dashboard
+              Repugo
             </h1>
             <p className="text-xs text-muted-foreground">Analytics & Insights</p>
           </div>
@@ -46,7 +46,7 @@ export const DashboardHeader = () => {
           
           <div className="hidden md:flex flex-col items-end">
             <span className="text-sm font-medium text-foreground">Admin User</span>
-            <span className="text-xs text-muted-foreground">admin@reputation.io</span>
+            <span className="text-xs text-muted-foreground">admin@repugo.com</span>
           </div>
 
           <button className="flex items-center gap-2 focus:outline-none group">

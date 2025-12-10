@@ -7,6 +7,7 @@ import { SentimentPieChart } from "@/components/SentimentPieChart";
 import { TopPostsCarousel } from "@/components/TopPostsCarousel";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { ThumbsUp, ThumbsDown, Minus, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // ----------------------
 // EMPLOYER STATIC DATA
@@ -19,9 +20,6 @@ const employerData = {
     rating: "4.2/5.0",
   },
 
-  // ---------------------------
-  // ⭐ YEARLY TRENDS (2019–2025)
-  // ---------------------------
   yearlyTrends: [
     { year: "2019", positive: 52, negative: 32, neutral: 16 },
     { year: "2020", positive: 55, negative: 30, neutral: 15 },
@@ -32,9 +30,6 @@ const employerData = {
     { year: "2025", positive: 75, negative: 15, neutral: 10 },
   ],
 
-  // ---------------------------
-  // ⭐ MONTHLY TRENDS (2025)
-  // ---------------------------
   monthlyTrends: [
     { month: "Jan", positive: 60, negative: 20, neutral: 20 },
     { month: "Feb", positive: 62, negative: 19, neutral: 19 },
@@ -50,14 +45,12 @@ const employerData = {
     { month: "Dec", positive: 78, negative: 10, neutral: 12 },
   ],
 
-  // ---------------------------
   sentiment: [
     { name: "Positive", value: 68 },
     { name: "Negative", value: 18 },
     { name: "Neutral", value: 14 },
   ],
 
-  // ---------------------------
   topPosts: [
     {
       id: 1,
@@ -102,13 +95,9 @@ const employerData = {
   ],
 };
 
-
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"employer" | "insurance">("employer");
 
-  // ----------------------
-  // INSURANCE REAL TIME API STATE
-  // ----------------------
   const [insuranceData, setInsuranceData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -116,10 +105,9 @@ const Index = () => {
     const fetchInsuranceData = async () => {
       setLoading(true);
       try {
-        const res = await fetch("https://sagargo.app.n8n.cloud/webhook/ergo-insurancedata");
+        const res = await fetch("https://sagarsarang.app.n8n.cloud/webhook/ergo-insurancedata");
         const data = await res.json();
 
-        // ⭐ FIX: API RETURNS ARRAY → TAKE FIRST OBJECT
         if (Array.isArray(data) && data.length > 0) {
           setInsuranceData(data[0]);
         } else {
@@ -164,6 +152,7 @@ const Index = () => {
           <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
+        {/* INSIGHT */}
         <div className="glass rounded-2xl p-6 mb-8 border border-primary/30 bg-gradient-to-r from-primary/10 to-accent/10 animate-slide-in">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -180,50 +169,66 @@ const Index = () => {
           </div>
         </div>
 
+        {/* METRIC CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
-          <MetricCard
-            title="Positive Sentiment"
-            value={currentData.metrics.positive}
-            change="+5.2%"
-            trend="up"
-            icon={ThumbsUp}
-            color="success"
-          />
-          <MetricCard
-            title="Negative Sentiment"
-            value={currentData.metrics.negative}
-            change="-2.8%"
-            trend="down"
-            icon={ThumbsDown}
-            color="destructive"
-          />
-          <MetricCard
-            title="Neutral Sentiment"
-            value={currentData.metrics.neutral}
-            change="-1.2%"
-            trend="neutral"
-            icon={Minus}
-            color="warning"
-          />
-          <MetricCard
-            title="Average Rating"
-            value={currentData.metrics.rating}
-            change="+0.3"
-            trend="up"
-            icon={Star}
-            color="primary"
-          />
+
+          <Link to="/posts?sentiment=Positive" className="block">
+            <MetricCard
+              title="Positive Sentiment"
+              value={currentData.metrics.positive}
+              change="+5.2%"
+              trend="up"
+              icon={ThumbsUp}
+              color="success"
+            />
+          </Link>
+
+          <Link to="/posts?sentiment=Negative" className="block">
+            <MetricCard
+              title="Negative Sentiment"
+              value={currentData.metrics.negative}
+              change="-2.8%"
+              trend="down"
+              icon={ThumbsDown}
+              color="destructive"
+            />
+          </Link>
+
+          <Link to="/posts?sentiment=Neutral" className="block">
+            <MetricCard
+              title="Neutral Sentiment"
+              value={currentData.metrics.neutral}
+              change="-1.2%"
+              trend="neutral"
+              icon={Minus}
+              color="warning"
+            />
+          </Link>
+
+          <Link to="/posts?sentiment=all" className="block">
+            <MetricCard
+              title="Average Rating"
+              value={currentData.metrics.rating}
+              change="+0.3"
+              trend="up"
+              icon={Star}
+              color="primary"
+            />
+          </Link>
+
         </div>
 
+        {/* CHARTS */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-slide-in">
           <div className="lg:col-span-2">
-            <TrendChart yearlyData={currentData.yearlyTrends} monthlyData={currentData.monthlyTrends}/>
+            <TrendChart yearlyData={currentData.yearlyTrends} monthlyData={currentData.monthlyTrends} />
           </div>
           <div className="lg:col-span-1">
             <SentimentPieChart data={currentData.sentiment} />
           </div>
         </div>
 
+        {/* POSTS */}
         <div className="mt-6 animate-fade-in">
           <TopPostsCarousel posts={currentData.topPosts} />
         </div>

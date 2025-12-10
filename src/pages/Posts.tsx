@@ -4,16 +4,18 @@ import { Input } from "@/components/ui/input";
 import { PostCard } from "@/components/PostCard";
 import { DashboardHeader } from "@/components/DashboardHeader";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { TimeFilter } from "@/components/TimeFilter";
+import { SentimentFilter } from "@/components/SentimentFilter";
+import { Loader } from "@/components/Loader";
 
 export interface Post {
   id: number;
   title: string;
   excerpt: string;
   author: string;
-  date: string; 
+  date: string;
   likes: number;
   views: number;
   comments: number;
@@ -21,19 +23,32 @@ export interface Post {
   subreddit?: string;
   timestamp: string;
   url: string;
+  sentiment?: "Positive" | "Negative" | "Neutral";
+  llm_summary?: string;
 }
 
 const Posts = () => {
+  const [searchParams] = useSearchParams();
+  const initialSentiment = searchParams.get("sentiment") || "all";
+
   const [searchQuery, setSearchQuery] = useState("");
   const [timeRange, setTimeRange] = useState("all");
+  const [sentiment, setSentiment] = useState(initialSentiment);
+
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const paramSentiment = searchParams.get("sentiment") || "all";
+    setSentiment(paramSentiment);
+  }, [searchParams]);
+
+  // FETCH POSTS
+  useEffect(() => {
     const fetchPosts = async () => {
       try {
         const res = await fetch(
-          "https://sagargo.app.n8n.cloud/webhook/ergo-allposts"
+          "https://sagarsarang.app.n8n.cloud/webhook/ergo-allposts"
         );
         const data = await res.json();
 
@@ -41,8 +56,8 @@ const Posts = () => {
           id: p.id,
           title: p.title,
           excerpt: p.content?.slice(0, 120) + "...",
-          author: p.source || "Unknown",
-          date: p.date, // "2d ago"
+          author: p.author || "Unknown",
+          date: p.date,
           likes: p.total_likes,
           views: p.view_count,
           comments: p.total_comments,
@@ -50,6 +65,8 @@ const Posts = () => {
           subreddit: p.source,
           timestamp: p.published_at,
           url: p.url,
+          sentiment: p.sentiment || "Neutral",
+          llm_summary:p.llm_summary
         }));
 
         setPosts(mapped);
@@ -63,26 +80,13 @@ const Posts = () => {
     fetchPosts();
   }, []);
 
-  /** Convert "2d ago", "3w ago", "1mo ago" to a timestamp */
   const parseRelativeDate = (str: string): number => {
     if (!str) return Date.now();
-
     const now = Date.now();
 
-    if (str.includes("d")) {
-      const days = parseInt(str);
-      return now - days * 24 * 60 * 60 * 1000;
-    }
-
-    if (str.includes("w")) {
-      const weeks = parseInt(str);
-      return now - weeks * 7 * 24 * 60 * 60 * 1000;
-    }
-
-    if (str.includes("mo")) {
-      const months = parseInt(str);
-      return now - months * 30 * 24 * 60 * 60 * 1000;
-    }
+    if (str.includes("d")) return now - parseInt(str) * 86400000;
+    if (str.includes("w")) return now - parseInt(str) * 7 * 86400000;
+    if (str.includes("mo")) return now - parseInt(str) * 30 * 86400000;
 
     return now;
   };
@@ -92,7 +96,7 @@ const Posts = () => {
 
     let filtered = [...posts];
 
-    // TEXT SEARCH
+    // SEARCH
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -103,7 +107,15 @@ const Posts = () => {
       );
     }
 
-    // TIME RANGE FILTER
+    // SENTIMENT FILTER
+    if (sentiment !== "all") {
+      filtered = filtered.filter(
+        (post) =>
+          post.sentiment?.toLowerCase() === sentiment.toLowerCase()
+      );
+    }
+
+    // TIME RANGE
     if (timeRange !== "all") {
       const now = Date.now();
 
@@ -113,13 +125,13 @@ const Posts = () => {
 
         switch (timeRange) {
           case "today":
-            return diff <= 1 * 24 * 60 * 60 * 1000;
+            return diff <= 86400000;
           case "week":
-            return diff <= 7 * 24 * 60 * 60 * 1000;
+            return diff <= 604800000;
           case "month":
-            return diff <= 30 * 24 * 60 * 60 * 1000;
+            return diff <= 2592000000;
           case "last3months":
-            return diff <= 90 * 24 * 60 * 60 * 1000;
+            return diff <= 7776000000;
           default:
             return true;
         }
@@ -127,7 +139,7 @@ const Posts = () => {
     }
 
     return filtered;
-  }, [searchQuery, timeRange, posts, loading]);
+  }, [searchQuery, timeRange, sentiment, posts, loading]);
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -147,7 +159,7 @@ const Posts = () => {
 
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">
-                All Posts
+                Ergo Posts
               </h1>
               <p className="text-muted-foreground">
                 Browse and search through all posts
@@ -155,7 +167,7 @@ const Posts = () => {
             </div>
           </div>
 
-          {/* Search + Filter */}
+          {/* search + filters */}
           <div className="glass border-border/50 rounded-lg p-6 mb-8">
             <div className="flex flex-col md:flex-row gap-4 justify-between">
 
@@ -171,20 +183,22 @@ const Posts = () => {
                 />
               </div>
 
-              {/* Time filter */}
-              <TimeFilter
-                value={timeRange}
-                onChange={setTimeRange}
-              />
+              <SentimentFilter value={sentiment} onChange={setSentiment} />
+
+              <TimeFilter value={timeRange} onChange={setTimeRange} />
             </div>
           </div>
 
+          {/* Loading */}
           {loading && (
-            <div className="text-center py-20">
-              <p className="text-muted-foreground">Loading posts...</p>
-            </div>
+            <>
+              <div className="min-h-screen flex justify-center items-center">
+                <Loader />
+              </div>
+            </>
           )}
 
+          {/* No Results */}
           {!loading && filteredPosts.length === 0 && (
             <div className="glass border-border/50 rounded-lg p-12 text-center">
               <p className="text-muted-foreground">
@@ -193,6 +207,7 @@ const Posts = () => {
             </div>
           )}
 
+          {/* Posts */}
           {!loading && (
             <div className="space-y-4">
               {filteredPosts.map((post) => (

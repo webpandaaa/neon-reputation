@@ -14,14 +14,12 @@ export const ChatBot = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Focus input when chat opens
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 100);
@@ -74,9 +72,9 @@ export const ChatBot = () => {
             <div className="flex items-center justify-between">
               <SheetTitle className="flex items-center gap-2 text-foreground">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <MessageCircle className="w-4 h-4 text-primary" />
+                  <img src="../images/onlyr.png" alt="" />
                 </div>
-                AI Assistant
+                Repugo
               </SheetTitle>
               <div className="flex items-center gap-1">
                 {messages.length > 0 && (
@@ -84,20 +82,20 @@ export const ChatBot = () => {
                     variant="ghost"
                     size="icon"
                     onClick={clearMessages}
-                    className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                    className="h-8 w-8 mr-6 text-muted-foreground hover:text-destructive"
                     title="Clear chat"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
                 )}
-                <Button
+                {/* <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsOpen(false)}
                   className="h-8 w-8 text-muted-foreground"
                 >
                   <X className="w-4 h-4" />
-                </Button>
+                </Button> */}
               </div>
             </div>
           </SheetHeader>
@@ -107,10 +105,10 @@ export const ChatBot = () => {
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center py-12">
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                  <MessageCircle className="w-8 h-8 text-primary" />
+                  <img src="../images/onlyr.png" alt="" />
                 </div>
                 <h3 className="text-lg font-medium text-foreground mb-2">
-                  Welcome to AI Assistant
+                  Welcome to Repugo
                 </h3>
                 <p className="text-sm text-muted-foreground max-w-xs">
                   Ask me anything about your online reputation data, analytics, or get insights about your brand.
@@ -124,8 +122,12 @@ export const ChatBot = () => {
                     role={message.role}
                     content={message.content}
                     timestamp={message.timestamp}
+                    meta={message.meta}
+                    onSuggestionClick={(text) => sendMessage(text)}
                   />
+
                 ))}
+
                 {isLoading && (
                   <div className="flex gap-3 p-3 rounded-lg bg-muted/50 mr-4 animate-fade-in">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
