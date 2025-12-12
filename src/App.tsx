@@ -15,6 +15,7 @@ import AllianzPosts from "./pages/AllianzPosts";
 import { ChatBot } from "./components/ChatBot";
 import SignalIdunaPosts from "./pages/SignalIdunaPosts";
 import GeneraliPosts from "./pages/GeneraliPosts";
+import ErgoSummary from "./pages/ErgoSummary";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => (
                 <Route path="/signalidunaposts" element={<SignalIdunaPosts />} />
                 <Route path="/generaliposts" element={<GeneraliPosts />} />
                 <Route path="/posts/:id" element={<PostDetail />} />
+                <Route path="/ergo-summary" element={<ErgoSummary />} />
                 <Route path="/competitors/:competitor" element={<CompetitorAnalysis />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

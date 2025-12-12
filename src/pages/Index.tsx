@@ -102,9 +102,13 @@ const Index = () => {
   const [insuranceData, setInsuranceData] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // ----------------------
+  // FETCH INSURANCE METRICS ONLY (NO INSIGHTS)
+  // ----------------------
   useEffect(() => {
     const fetchInsuranceData = async () => {
       setLoading(true);
+
       try {
         const res = await fetch("https://sagarsarang.app.n8n.cloud/webhook/ergo-insurancedata");
         const data = await res.json();
@@ -153,30 +157,57 @@ const Index = () => {
           <TabSelector activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
-        {/* INSIGHT */}
-        <div className="glass rounded-2xl p-6 mb-8 border border-primary/30 bg-gradient-to-r from-primary/10 to-accent/10 animate-slide-in">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+        {/* INSIGHT BOX */}
+        <div
+          className="
+            glass rounded-2xl p-6 mb-8 border border-primary/30 
+            bg-gradient-to-r from-primary/10 to-accent/10 
+            animate-slide-in transition-all duration-300
+            hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1
+            flex justify-between items-center
+          "
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full flex items-center justify-center">
               <Star className="w-5 h-5 text-primary" />
             </div>
+
             <div>
-              <h3 className="text-lg font-bold text-foreground mb-1">Key Insights</h3>
-              <p className="text-sm text-muted-foreground">
-                {activeTab === "employer"
-                  ? "Reputation improved by 12% YoY. Employee satisfaction shows strong upward trend."
-                  : "Customer trust increased by 15% YoY. Claims processing efficiency is a major positive factor."}
-              </p>
+              <h3 className="text-lg font-bold text-foreground mb-1">Key Insight</h3>
+
+              {/* 1 line only */}
+              {activeTab === "employer" ? (
+                <p className="text-sm text-muted-foreground truncate max-w-[500px]">
+                  Reputation improved by 12% YoY. Employee satisfaction shows strong upward trend.
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground truncate max-w-[500px]">
+                  Click “More Info” to view the full ERGO insights summary.
+                </p>
+              )}
             </div>
           </div>
+
+          {/* More Info Button */}
+          <Link
+            to="/ergo-summary"
+            className="
+              px-4 py-2 rounded-lg border border-primary/40 
+              text-primary font-semibold text-sm flex items-center gap-2
+              hover:bg-primary hover:text-white hover:border-primary
+              transition-all duration-300 hover:translate-x-1
+            "
+          >
+            More Info →
+          </Link>
         </div>
 
-        {/* METRIC CARDS */}
+        {/* METRICS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 animate-fade-in">
-
           <Link to="/posts?sentiment=Positive" className="block">
             <MetricCard
               title="Positive Sentiment"
-              value={currentData.metrics.positive}
+              value={currentData.metrics?.positive}
               change="+5.2%"
               trend="up"
               icon={ThumbsUp}
@@ -187,7 +218,7 @@ const Index = () => {
           <Link to="/posts?sentiment=Negative" className="block">
             <MetricCard
               title="Negative Sentiment"
-              value={currentData.metrics.negative}
+              value={currentData.metrics?.negative}
               change="-2.8%"
               trend="down"
               icon={ThumbsDown}
@@ -198,7 +229,7 @@ const Index = () => {
           <Link to="/posts?sentiment=Neutral" className="block">
             <MetricCard
               title="Neutral Sentiment"
-              value={currentData.metrics.neutral}
+              value={currentData.metrics?.neutral}
               change="-1.2%"
               trend="neutral"
               icon={Minus}
@@ -209,14 +240,13 @@ const Index = () => {
           <Link to="/posts?sentiment=all" className="block">
             <MetricCard
               title="Average Rating"
-              value={currentData.metrics.rating}
+              value={currentData.metrics?.rating}
               change="+0.3"
               trend="up"
               icon={Star}
               color="primary"
             />
           </Link>
-
         </div>
 
         {/* CHARTS */}
@@ -224,6 +254,7 @@ const Index = () => {
           <div className="lg:col-span-2">
             <TrendChart yearlyData={currentData.yearlyTrends} monthlyData={currentData.monthlyTrends} />
           </div>
+
           <div className="lg:col-span-1">
             <SentimentPieChart data={currentData.sentiment} />
           </div>
